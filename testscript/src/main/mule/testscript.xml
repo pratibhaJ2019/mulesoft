@@ -97,9 +97,76 @@ output application/json
 		<ee:transform doc:name="Transform Message" doc:id="6b6e5653-a079-4f3d-a088-da044a5f2eab" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
-output application/java
+output application/json
+---
+readUrl("classpath://myJson.json", "application/json")]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Map_Elements_from_an_array_into_an_Object" doc:id="a28f1cce-2f12-4c36-8628-8c7787b7efda" >
+		<ee:transform doc:name="Transform Message" doc:id="232442e3-4683-4e7b-84de-a47b0214e4a4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
 ---
 {
+  (
+    ["a", "b", "c"] map ((value, index) -> {
+        (index): value
+    })
+  )
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Pluck_Values_from_an_Object_into_an_Array" doc:id="3e99f719-ce87-432c-8d65-0f27637a41c7" >
+		<ee:transform doc:name="Transform Message" doc:id="890d78b3-6220-4961-a0dd-2656035f642a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "0": "a",
+  "1": "b",
+  "2": "c"
+} pluck ((value) -> value)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Map_and_Merge_Fields" doc:id="cde75fad-ce3a-4d49-938f-7bb404e8f130" >
+		<ee:transform doc:name="Transform Message" doc:id="0736e4b1-6696-4750-a096-f923077a194a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myVar = [
+  { bookId: 101,
+    title: "world history",
+    price: "19.99"
+  },
+  {
+    bookId: 202,
+    title: 'the great outdoors',
+    price: "15.99"
+  }
+]
+var myVar2 = [
+  {
+    bookId: 101,
+    author: "john doe"
+  },
+  {
+    bookId: 202,
+    author: "jane doe"
+  }
+]
+output application/json
+---
+myVar map (item, index) -> using (id = item.bookId) {
+	"id" : id,
+	"topic" : item.title,
+	"cost" : item.price as Number,
+	(myVar2 filter ($.*bookId contains id) map (item) -> {
+		author : item.author
+	})
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>

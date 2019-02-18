@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="myJsonType" format="json">
+      <types:shape format="weave" example="myJson.json"><![CDATA[%dw 2.0
+type myJsonType = {| hello: String |} {"MetadataFormat": "json",
+"example": "{\"hello\":\"world\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#8c963d97-025a-439a-9d33-7634c40f22e5">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="myJsonType"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="myJsonType"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
