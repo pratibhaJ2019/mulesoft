@@ -171,4 +171,23 @@ myVar map (item, index) -> using (id = item.bookId) {
 			</ee:message>
 		</ee:transform>
 	</flow>
+	<flow name="CSV" doc:id="97dab3d7-ce3f-4d7c-b720-57676f72589e" >
+		<ee:transform doc:name="Transform Message" doc:id="48d6f157-bf98-4b25-b181-55390e5682d2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/csv
+---
+[
+  {
+    "Name":"Mariano",
+    "Last Name":"De achaval"
+  },
+  {
+    "Name":"Leandro",
+    "Last Name":"Shokida"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 </mule>

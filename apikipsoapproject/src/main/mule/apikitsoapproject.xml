@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/apikit-soap http://www.mulesoft.org/schema/mule/apikit-soap/current/mule-apikit-soap.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <http:listener-config name="api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+    <apikit-soap:config httpStatusVarName="httpStatus" name="soapkit-config" port="TshirtServicePort" service="TshirtService" wsdlLocation="tshirt2.wsdl"/>
+    <flow name="api-main">
+        <http:listener config-ref="api-httpListenerConfig" path="/TshirtService/TshirtServicePort">
+            <http:response statusCode="#[attributes.protocolHeaders.httpStatus default 200]">
+            </http:response>
+            <http:error-response statusCode="#[attributes.protocolHeaders.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <apikit-soap:router config-ref="soapkit-config">
+            <apikit-soap:attributes><![CDATA[#[%dw 2.0
+              output application/java
+              ---
+              {
+                  headers: attributes.headers,
+                  method: attributes.method,
+                  queryString: attributes.queryString
+            }]]]></apikit-soap:attributes>
+        </apikit-soap:router>
+    </flow>
+    <flow name="OrderTshirt:\soapkit-config">
+        <ee:transform doc:id="51cc720c-856d-45cc-899e-c63a89fb33d8">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/java
+ns ns0 http://mulesoft.org/tshirt-service
+---
+{
+    body: {
+        ns0#OrderTshirtResponse: {
+            orderId: "I got a request from " ++ (payload.body.ns0#OrderTshirt.name default "")
+        }
+    } write "application/xml"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="ListInventory:\soapkit-config">
+        <ee:transform doc:id="2f1f150e-7e94-49e0-9c13-1cafdd16daeb">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://mulesoft.org/tshirt-service
+ns soap http://schemas.xmlsoap.org/soap/envelope/
+---
+{
+  soap#Fault: {
+    faultcode: "soap:Server",
+    faultstring: "The error detailsz",
+    detail: {
+      ns0#TshirtFault: {
+        errorStuff: 500
+      }
+    }
+  }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<apikit-soap:fault operation="ListInventory" fault="TshirtFault" doc:name="SOAP Fault" doc:id="a52718ab-f9a1-4599-8b51-602c22636e34" config-ref="soapkit-config"/>
+    </flow>
+    <flow name="TrackOrder:\soapkit-config">
+        <ee:transform doc:id="cfccb1c3-9ab5-46ce-8a86-ba9caf3f45de">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/java
+ns soap http://schemas.xmlsoap.org/soap/envelope
+---
+{
+    body: {
+        soap#Fault: {
+            faultcode: "soap:Server",
+            faultstring: "Operation [TrackOrder:\soapkit-config] not implemented"
+        }
+    } write "application/xml"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+</mule>
