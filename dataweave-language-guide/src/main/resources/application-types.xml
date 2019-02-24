@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="input" format="json">
+      <types:shape format="weave" example="examples/input.json"><![CDATA[%dw 2.0
+type input = {|
+  title: String, 
+  author: String, 
+  year: Number {"typeId": "int"}
+|} {"MetadataFormat": "json",
+"example": "{\"title\":\"Java 8 in Action\",\"author\":\"Mario Fusco\",\"year\":2014}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#43cc599f-04d5-4e4c-ae7e-33db62d40d41">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="input"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

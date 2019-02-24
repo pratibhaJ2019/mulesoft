@@ -31,13 +31,15 @@ output application/java
 ns ns0 http://mulesoft.org/tshirt-service
 ---
 {
-    body: {
-        ns0#OrderTshirtResponse: {
-            orderId: "I got a request from " ++ (payload.body.ns0#OrderTshirt.name default "")
-        }
-    } write "application/xml"
+	body : {
+		ns0#OrderTshirtResponse: {
+			orderId: (("I got a request from " ++ payload.body.ns0#OrderTshirt.name ++ " using the following auth header ") ++ (payload.headers.header.ns0#AuthenticationHeader.apiKey default "")) ++ (payload.body.ns0#OrderTshirt.size default "")
+		}
+	} write "application/xml",
 }]]></ee:set-payload>
             </ee:message>
+			<ee:variables >
+			</ee:variables>
         </ee:transform>
     </flow>
     <flow name="ListInventory:\soapkit-config">
