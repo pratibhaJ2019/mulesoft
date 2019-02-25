@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
   <types:catalog>
-    <types:type name="input" format="json">
-      <types:shape format="weave" example="examples/input.json"><![CDATA[%dw 2.0
-type input = {|
+    <types:type name="outputType" format="json">
+      <types:shape format="weave" example="output.json"><![CDATA[%dw 2.0
+type outputType = {|
   title: String, 
   author: String, 
   year: Number {"typeId": "int"}
@@ -12,12 +12,30 @@ type input = {|
 
 ]]></types:shape>
     </types:type>
+    <types:type name="timestamp" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: datetime]]></types:shape>
+    </types:type>
   </types:catalog>
-  <types:enrichment select="#43cc599f-04d5-4e4c-ae7e-33db62d40d41">
+  <types:enrichment select="#f1421fce-0145-4d9e-82d5-8be788f2f9db">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="outputType"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="outputType"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#7bd527af-a8a7-4bf0-997d-2c84b2cc12d7">
     <types:processor-declaration>
       <types:output-event>
         <types:message>
-          <types:payload type="input"/>
+          <types:payload type="timestamp"/>
         </types:message>
       </types:output-event>
     </types:processor-declaration>

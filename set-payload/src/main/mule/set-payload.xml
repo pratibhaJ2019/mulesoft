@@ -4,6 +4,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 	<flow name="set-payloadFlow" doc:id="d1e8a81f-e3e0-4acb-9c89-c53408b380c9" >
-		<set-payload doc:name="Set Payload" doc:id="ee788eb2-ad4c-423d-b89b-b407155b34f1" value="{ 'name' : 'Ana', 'office' : 'BA' }" mimeType="application/octet-stream" encoding="UTF-8"/>
+		<set-payload doc:name="Set Payload" doc:id="ee788eb2-ad4c-423d-b89b-b407155b34f1" value="output application/json --- { 'name' : 'Ana', 'office' : 'BA' }" mimeType="application/octet-stream" encoding="UTF-8"/>
 	</flow>
 </mule>

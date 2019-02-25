@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="Array" doc:id="7078249f-642b-49f0-8322-fbbaa1b3f59d" >
+		<ee:transform doc:name="Transform Message" doc:id="30b668f1-9fb2-4531-a73d-a967a3dbcb21" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var x = "words"
+---
+[ "My", "three", x ]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="conditional_statement" doc:id="e70e18e2-b483-4df9-ac31-fdfe00c3b470" >
+		<ee:transform doc:name="Transform Message" doc:id="e5e55cdd-45ba-4a50-97fd-1321404e0f90" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var x = true
+var y = false
+---
+[(1) if x, (2) if y]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="CDATA" doc:id="29fa6d22-a2af-4940-85d7-32a58efef40b" >
+		<ee:transform doc:name="Transform Message" doc:id="93ea7a4e-5b1c-4185-94f6-7da24881d564" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml encoding="UTF-8"
+---
+{
+  users:
+  {
+    user : "Mariano" as CData,
+    age : 31 as CData
+  }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="date" doc:id="062dc8b0-3486-4514-9534-c056baebeb8f" >
+		<ee:transform doc:name="Transform Message" doc:id="54a2259b-a6d7-46be-aa61-56806d9e67b5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+|2003-10-01|
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dateTime" doc:id="665a1ba2-6980-441c-a21c-b66acdeda67c" >
+		<ee:transform doc:name="Transform Message" doc:id="6d38cd67-581c-4d8f-a898-299bedc83254" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+|2003-10-01T23:57:59-03:00|
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="localDateTime" doc:id="afae0eae-3014-4e2d-af95-5c1732b2624d" >
+		<ee:transform doc:name="Transform Message" doc:id="6d1493a1-2364-46cb-bf9f-85d144823eb9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+|2003-10-01T23:57:59|
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="period" doc:id="676ced27-f6c2-44b1-bfbd-cfeab44c63f1" >
+		<ee:transform doc:name="Transform Message" doc:id="e645bb9d-0b7c-4663-9460-142d1dd5c114" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+a: |20:00:00| + |PT1M1S|]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dateDecomposition" doc:id="afde7635-e559-47ca-8156-a776b7282bc4" >
+		<ee:transform doc:name="Transform Message" doc:id="dee7a742-3b4b-4bd3-b14f-2c81595418ec" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var myDate = |2003-10-01T23:57:59.700-03:00|
+---
+{
+  year: myDate.year,
+  month: myDate.month,
+  day: myDate.day,
+  hour: myDate.hour,
+  minutes: myDate.minutes,
+  seconds: myDate.seconds,
+  milliseconds: myDate.milliseconds,
+  nanoseconds: myDate.nanoseconds,
+  quarter: myDate.quarter,
+  dayOfWeek: myDate.dayOfWeek,
+  dayOfYear: myDate.dayOfYear,
+  offsetSeconds: myDate.offsetSeconds
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="changingTheFormatOfADate" doc:id="090ff732-475e-454a-996a-eaed4534688e" >
+		<ee:transform doc:name="Transform Message" doc:id="b7db6a5c-2ae7-45ff-ad69-37871afdeddf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+formattedDate: |2003-10-01T23:57:59| as String {format: "YYYY-MM-dd"}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="changingTheFormatOfADate2" doc:id="e25e8219-455d-4847-b750-e375a4bd109e" >
+		<ee:transform doc:name="Transform Message" doc:id="f89925b8-e095-4689-9141-0032616e9fb4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+type Mydate = String { format: "YYYY/MM/dd" }
+---
+{
+  formattedDate1: |2003-10-01T23:57:59| as Mydate,
+  formattedDate2: |2015-07-06T08:53:15| as Mydate
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Enum" doc:id="39aef6a4-9e37-4bc0-8939-6fbd9e4ff2f4" >
+		<ee:transform doc:name="Transform Message" doc:id="921402aa-a9ca-4fad-bfa8-8e44f8199e31" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+"Male" as Enum {class: "com.acme.GenderEnum"}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="singleValueObjects" doc:id="b4e019c4-ada1-4be1-8b7a-0c59f2d962f1" >
+		<ee:transform doc:name="Transform Message" doc:id="68c467f7-1ee6-4b35-a34f-d6725167428f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+name: "Annie"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="conditionalElements" doc:id="01f473dd-3792-4ffd-aac8-45c6fbdae675" >
+		<ee:transform doc:name="Transform Message" doc:id="aa967dcc-8451-4c94-94d5-60d8233c9f12" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml encoding="UTF-8"
+---
+file: {
+  name: "transform",
+  (extension: "zip") if payload.fileSystem?
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dynamicKey" doc:id="f27260d8-f16b-465b-aff7-627ad1db48a4" >
+		<ee:transform doc:name="Transform Message" doc:id="72b6a637-fc5a-4496-8cfd-e4dd202a1fbf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var dynamicKey = "language"
+---
+{
+  (dynamicKey): "Data Weave"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dynamicElements" doc:id="9eb8fea2-f5d7-4f28-9ec7-c5e5869d5b79" >
+		<ee:transform doc:name="Transform Message" doc:id="296c82e9-f368-48ec-8e5f-823062e4bc93" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var x = [
+  {b: "b"},
+  {c: "c", d: "d"}
+]
+var y = {e: "e"}
+---
+{
+  a: "a",
+  (x),
+  (y)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="conditionalXMLAttritubutes" doc:id="c53b911f-2e95-4c4d-b303-b32b65dc1814" >
+		<ee:transform doc:name="Transform Message" doc:id="2e89e14f-a8b4-46ba-ba87-923b459ba2c1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+  name @(
+    (company: "Acme") if false,
+    (transform: "Anything") if true
+  ): "DataWeave"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

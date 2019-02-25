@@ -1,1 +1,5 @@
-null as Null {encoding: "windows-1252", mediaType: "*/*", mimeType: "*/*", raw: null}
+{
+  "title": "Java 8 in Action",
+  "author": "Mario Fusco",
+  "year": 2014
+}
