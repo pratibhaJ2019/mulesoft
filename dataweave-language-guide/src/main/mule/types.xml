@@ -214,4 +214,29 @@ output application/xml
 			</ee:message>
 		</ee:transform>
 	</flow>
+	<flow name="dynamicXMLAttributes" doc:id="1a2aebe2-13fe-4457-bf92-4222fe7ee784" >
+		<set-payload doc:name="Set Payload" doc:id="a67ec42f-7e90-405b-bba2-cc74b932769d" value='{"company": "Mule","product": "DataWeave"}' mimeType="application/json" encoding="UTF-8"/>
+		<ee:transform doc:name="Transform Message" doc:id="7708482a-6116-43ad-89e5-0ae3ed199cad" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+transformation @((payload)): "Transform from anything to anything"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="stringInterpolation" doc:id="162219e9-5048-4eaf-847b-d50798e88c58" >
+		<ee:transform doc:name="Transform Message" doc:id="053f9f35-31f9-4cc8-86a8-794ed75a9f43" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var name = "Shoki"
+---
+{
+    Greeting: "Hi, my name is $name",
+    Sum: "1 + 1 = $(1 + 1)"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 </mule>

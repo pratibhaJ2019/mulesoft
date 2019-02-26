@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="typeCoercionFlow" doc:id="b78dc3de-e1bf-4607-a5d4-c9df9bb45dff" >
+		<set-payload value="&lt;items&gt;&lt;item&gt;&lt;price&gt;22.30&lt;/price&gt;&lt;/item&gt;&lt;item&gt;&lt;price&gt;22.31&lt;/price&gt;&lt;/item&gt;&lt;/items&gt;" mimeType="application/xml" encoding="UTF-8" doc:name="Set Payload" doc:id="6e5a24c0-397c-4fd6-9e05-e46118a5f0fc" />
+		<ee:transform doc:name="Transform Message" doc:id="e69132d0-2ef4-443e-8ed4-48d696ffc131" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+type Currency = String { format: "\$#,###.00"}
+---
+books: payload.items.*item map
+    book:
+        price: $.price as Currency]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
