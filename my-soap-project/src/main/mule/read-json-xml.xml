@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+
+<flow name="read-json-xmlFlow" doc:id="ce2e5abc-62f8-4743-be7f-a953382cc4fc" >
+		<scheduler doc:name="Scheduler" doc:id="49ab80c5-fa3f-4e0e-a9a5-b640182335f5" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Read Json" doc:id="8a8b2504-87cf-4c21-bfca-a14274a097e1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+//{
+//	body: '<?xml version="1.0" encoding="UTF-8"?>
+//<HelloWorldResponse xmlns="http://www.cegid.fr/Retail/1.0"><HelloWorldResult>Now: (2019-05-09T18:56:11.8358720)InputText: (Hello!)DataBaseId: (MONCLERJPN_Y2_TEST)ErpIdentity: (WEB) (WEB) (MONCLERJPN_Y2_TEST)Current Identity: (MONCLERJPN_Y2_TEST\WEB) (CBR)CurrentCulture: (fr-FR)CurrentUICulture: (fr-FR)CBR Version: (14.0.0.2046)</HelloWorldResult></HelloWorldResponse>',
+//	headers: [],
+//	attachments: []
+//}
+var xmlString = '<?xml version="1.0" encoding="UTF-8"?>
+<ns2:GetReturnResponse xmlns:ns2="http://services.moncler.webservices.cx.venistar.com/">
+	<return>
+		<resultCode>0</resultCode>
+		<rowList>
+			<resultCode>0</resultCode>
+			<id>2264</id>
+			<dCity/>
+			<dCountryID/>
+			<dFirstName/>
+			<dLastName/>
+			<dLine1/>
+			<dPhoneNumber/>
+			<hActive>true</hActive>
+			<hComment/>
+			<hCurrencyID>KRW</hCurrencyID>
+			<hCustomerID>KWR0100000000070</hCustomerID>
+			<hDate>2019-05-09T00:00:00+02:00</hDate>
+			<hNumber>19000201</hNumber>
+			<hStump>WR01</hStump>
+			<hType>Receipt</hType>
+			<hInternalReference>200000004511</hInternalReference>
+			<hLineID>1</hLineID>
+			<hExternalReference>200000004511</hExternalReference>
+			<hFollowedReference/>
+			<hBillingStatus/>
+			<hCancelReasonID/>
+			<hCancelStatus/>
+			<hCancelComment/>
+			<hDeliveryStoreID/>
+			<hDeliveryType/>
+			<hDeliveryWarehouseID/>
+			<hFollowupStatus>Validated</hFollowupStatus>
+			<hGiftMessage/>
+			<hGiftMessageType/>
+			<hPaymentMethodID/>
+			<hPaymentStatus/>
+			<hReturnStatus/>
+			<hReturnType/>
+			<hShippingStatus/>
+			<hTracking/>
+			<hTransporter/>
+			<hOrigin>ECommerce</hOrigin>
+			<hSalesPersonID/>
+			<hStoreID>WR01</hStoreID>
+			<hTaxExcluded>false</hTaxExcluded>
+			<hWarehouseID>WR01</hWarehouseID>
+			<iCity/>
+			<iCountryID/>
+			<iFirstName/>
+			<iLastName/>
+			<iLine1/>
+			<iLine2/>
+			<iLine3/>
+			<iPhoneNumber/>
+			<iRegion/>
+			<iTitleID/>
+			<iZipCode/>
+			<lComment/>
+			<lCatalogReference>200000004511</lCatalogReference>
+			<lDeliveryDate>2019-05-09T02:00:00+02:00</lDeliveryDate>
+			<lDiscountTypeID/>
+			<lExternalReference/>
+			<lID>D2091418050568950  00070         X</lID>
+			<lReference>8054654699662</lReference>
+			<lLabel>Alberic</lLabel>
+			<lMovementReasonID/>
+			<lNetUnitPrice>364.0000</lNetUnitPrice>
+			<lOrigin>ECommerce</lOrigin>
+			<lPackageReference/>
+			<lQuantity>1</lQuantity>
+			<lSalesPersonID/>
+			<lUnitPrice>400.0000</lUnitPrice>
+			<pAmount>400</pAmount>
+			<pTransactionNumber>200000004511</pTransactionNumber>
+			<pCurrencyID>KRW</pCurrencyID>
+			<pDueDate>2019-05-09T10:49:42+02:00</pDueDate>
+			<pID>1</pID>
+			<pIsReceivedPayment>false</pIsReceivedPayment>
+			<pMethodID>310</pMethodID>
+			<returnNo>200000004511-RC1dfdfdfdfdfddfdfddf</returnNo>
+		</rowList>
+		<rowList>
+			<resultCode>0</resultCode>
+			<id>2265</id>
+			<dCity/>
+			<dCountryID/>
+			<dFirstName/>
+			<dLastName/>
+			<dLine1/>
+			<dPhoneNumber/>
+			<hActive>true</hActive>
+			<hComment/>
+			<hCurrencyID>KRW</hCurrencyID>
+			<hCustomerID>KWR0100000000070</hCustomerID>
+			<hDate>2019-05-09T00:00:00+02:00</hDate>
+			<hNumber>19000201</hNumber>
+			<hStump>WR01</hStump>
+			<hType>Receipt</hType>
+			<hInternalReference>200000004511</hInternalReference>
+			<hLineID>1</hLineID>
+			<hExternalReference>200000004511</hExternalReference>
+			<hFollowedReference/>
+			<hBillingStatus/>
+			<hCancelReasonID/>
+			<hCancelStatus/>
+			<hCancelComment/>
+			<hDeliveryStoreID/>
+			<hDeliveryType/>
+			<hDeliveryWarehouseID/>
+			<hFollowupStatus>Validated</hFollowupStatus>
+			<hGiftMessage/>
+			<hGiftMessageType/>
+			<hPaymentMethodID/>
+			<hPaymentStatus/>
+			<hReturnStatus/>
+			<hReturnType/>
+			<hShippingStatus/>
+			<hTracking/>
+			<hTransporter/>
+			<hOrigin>ECommerce</hOrigin>
+			<hSalesPersonID/>
+			<hStoreID>WR01</hStoreID>
+			<hTaxExcluded>false</hTaxExcluded>
+			<hWarehouseID>WR01</hWarehouseID>
+			<iCity/>
+			<iCountryID/>
+			<iFirstName/>
+			<iLastName/>
+			<iLine1/>
+			<iLine2/>
+			<iLine3/>
+			<iPhoneNumber/>
+			<iRegion/>
+			<iTitleID/>
+			<iZipCode/>
+			<lComment/>
+			<lCatalogReference>200000004511</lCatalogReference>
+			<lDeliveryDate>2019-05-09T02:00:00+02:00</lDeliveryDate>
+			<lDiscountTypeID/>
+			<lExternalReference/>
+			<lID>D2091418050568950  00070         X</lID>
+			<lReference>8054654699662</lReference>
+			<lLabel>Alberic</lLabel>
+			<lMovementReasonID/>
+			<lNetUnitPrice>364.0000</lNetUnitPrice>
+			<lOrigin>ECommerce</lOrigin>
+			<lPackageReference/>
+			<lQuantity>1</lQuantity>
+			<lSalesPersonID/>
+			<lUnitPrice>400.0000</lUnitPrice>
+			<pAmount>400</pAmount>
+			<pTransactionNumber>200000004511</pTransactionNumber>
+			<pCurrencyID>KRW</pCurrencyID>
+			<pDueDate>2019-05-09T10:49:42+02:00</pDueDate>
+			<pID>1</pID>
+			<pIsReceivedPayment>false</pIsReceivedPayment>
+			<pMethodID>310</pMethodID>
+			<returnNo>200000004511-RC1</returnNo>
+		</rowList>
+	</return>
+</ns2:GetReturnResponse>'
+---
+{
+	body: xmlString,
+	headers: [],
+	attachments: []
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="xml" doc:id="51e96a00-ce74-432f-8971-bfc18efe1c02" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+
+---
+read(payload.body, "application/xml")]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="retrieve data" doc:id="9e7efec4-9b86-4a08-9e99-4891f0d27db1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soap http://schemas.xmlsoap.org/soap/envelope
+ns ns01 http://services.moncler.webservices.cx.venistar.com/
+//{
+//    body: {
+//        soap#Fault: {
+//            faultcode: payload.body.ns01#GetReturnResponse.return.resultCode as String,
+//            faultstring: (payload.body.ns01#GetReturnResponse.return.resultDesc as String default "Unknown result description") ++ (vars.ff default "Unknown error")
+//        }
+//    } write "application/xml"
+//}
+// issue #62
+//{
+//        soap#Fault: {
+//            "soap:faultcode": "",
+//            "soap:faultstring": (payload.message default "Unknown error")
+//        } //write "application/xml"
+//}
+---
+{
+	IsTicketEligibleForReturnResponse @(xmlns:"https://development-batch-customers.de-c1.cloudhub.io/api/wsdl"): {
+		IsTicketEligibleForReturnResult @("xmlns:a": "http://schemas.datacontract.org/2004/07/OmnichannelMoncler", "xmlns:i":"http://www.w3.org/2001/XMLSchema-instance"): {
+			//"a:Message": (payload.message default "Unknown error"),
+			"a:Message" : "OK",
+			"a:ReturnAuthNumber": payload.GetReturnResponse.return.rowList.returnNo default "",
+			"a:TicketNumber": payload.GetReturnResponse.return.rowList.TicketNumber default "",
+			"a:TicketStore": payload.GetReturnResponse.return.rowList.TicketStore default "",
+			"a:TicketType": payload.GetReturnResponse.return.rowList.TicketType default ""
+		}
+	} //write "application/xml"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="05c899d0-6f67-4613-b5be-f48b2c78df68" message="#[payload]"/>
+	</flow>
+
+
+
+
+</mule>

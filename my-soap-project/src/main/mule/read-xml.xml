@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="read-xmlFlow" doc:id="faac500a-bc2f-4a1b-b12d-cebc2099ae64" >
+		<scheduler doc:name="Scheduler" doc:id="f27c23df-00d8-4ed7-97eb-64a6a73b62a5" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Read XML String" doc:id="f8eb6032-d108-4c85-b096-db7bc46827ab" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+//var myInput = read("<root>
+//    <order>
+//      <items>1</items>
+//      <items>3</items>
+//    </order>
+//    <order>
+//      <items>2</items>
+//    </order>
+//</root>",
+//"application/xml")
+output application/json
+
+var myInput = read('<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<soap:Fault xmlns:soap="http://schemas.xmlsoap.org/soap/envelope">
+			<soap:faultcode/>
+			<soap:faultstring>Response was of unexpected text/html ContentType.  Incoming portion of HTML stream: &lt;!doctype html>&lt;html lang="en">&lt;head>&lt;title>HTTP Status 500 â€“ Internal Server Error&lt;/title>&lt;style type="text/css">H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}.line {height: 1px; background-color: #525D76; border: none;}&lt;/style>&lt;/head>&lt;body>&lt;h1>HTTP Status 500 â€“ Internal Server Error&lt;/h1>&lt;hr class="line" />&lt;p>&lt;b>Type&lt;/b> Status Report&lt;/p>&lt;p>&lt;b>Message&lt;/b> Rest OMN_008 call failed with the following error Remote call failed: Code = (CBR00009) Message = (CBR00009 : Import failed : Ticket rÃ©fÃ©rence interne 200000004232 
+DOC00023 - ProblÃ¨me pour retrouver le tiers xxxx
+ (TCbrImportHelper.InvokeImport)) with correlation id 0-ed8b5220-7194-11e9-b016-0224455815cc&lt;/p>&lt;p>&lt;b>Description&lt;/b> The server encountered an unexpected condition that prevented it from fulfilling the request.&lt;/p>&lt;hr class="line" />&lt;h3>Apache Tomcat/8.0.53&lt;/h3>&lt;/body>&lt;/html></soap:faultstring>
+		</soap:Fault>
+	</soap:Body>
+</soap:Envelope>',
+'application/xml')
+---
+ContainsRequestedItem: (myInput.Envelope.*Body.*Fault.*faultstring) !=null]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="2dd43907-c8c5-4232-a5df-c707fbf85826" message="#[payload]"/>
+	</flow>
+</mule>
