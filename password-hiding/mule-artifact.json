@@ -1,0 +1,25 @@
+{
+	"configs": [
+		"password-hiding.xml"
+	],
+	"secureProperties": [
+		"password",
+		"birthdate"
+	],
+	"redeploymentEnabled": true,
+	"name": "secure-properties",
+	"minMuleVersion": "4.1.4",
+	"requiredProduct":"MULE_EE",
+	"classLoaderModelLoaderDescriptor": {
+		"id": "mule",
+		"attributes": {
+			"exportedResources": []
+		}
+	},
+	"bundleDescriptorLoader": {
+		"id": "mule",
+		"attributes": {
+			
+		}
+	}
+}
