@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:spring="http://www.mulesoft.org/schema/mule/spring"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd">
+
+	<http:listener-config name="HTTPS_Listener_config"
+		doc:name="HTTP Listener config" doc:id="f98f34a9-ec07-427f-be0f-963998e63a85">
+		<http:listener-connection protocol="HTTPS"
+			host="0.0.0.0" port="${https.port}">
+			<tls:context>
+				<tls:key-store keyPassword="password" path="mykeystore.jks"
+					password="password" type="jks" alias="serverkey" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config"
+		doc:name="HTTP Listener config" doc:id="2e5bf0fe-096b-4ae0-ba74-9415ab8f751d">
+		<http:listener-connection host="0.0.0.0"
+			port="8081" />
+	</http:listener-config>
+	<global-property doc:name="Global Property"
+		doc:id="bfa6d88f-bec5-4c60-8ffc-b2b2c3d51e5c" name="env" value="config" />
+	<configuration-properties doc:name="Configuration properties"
+		doc:id="027d388a-6ffb-4c84-b06d-0dfb3988a547" file="${env}.yaml" />
+	<!-- <spring:config name="Spring_Config" doc:name="Spring Config" doc:id="3af828b8-e0d2-4b37-a885-93893c6ae176" 
+		files="spring-beans.xml" /> -->
+	<!-- <spring:security-manager doc:name="Spring Security manager" doc:id="17764f5d-e525-4819-8314-3bcb99e5c53b" 
+		> -->
+	<!-- <spring:delegate-security-provider name="memoryProvider" delegate-ref="authenticationManager" 
+		/> -->
+	<!-- </spring:security-manager> -->
+
+</mule>

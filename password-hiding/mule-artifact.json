@@ -1,8 +1,13 @@
 {
 	"configs": [
-		"password-hiding.xml"
+		"spring-basic-auth.xml",
+		"password-hiding.xml",
+		"https.xml",
+		"global.xml",
+		"beans.xml"
 	],
 	"secureProperties": [
+		"https.port",
 		"http.port",
 		"password",
 		"birthdate"
@@ -10,7 +15,7 @@
 	"redeploymentEnabled": true,
 	"name": "secure-properties",
 	"minMuleVersion": "4.1.4",
-	"requiredProduct":"MULE_EE",
+	"requiredProduct": "MULE_EE",
 	"classLoaderModelLoaderDescriptor": {
 		"id": "mule",
 		"attributes": {
