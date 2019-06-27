@@ -14,13 +14,13 @@
         </http:listener>
         <apikit-soap:router config-ref="soapkit-config">
             <apikit-soap:attributes><![CDATA[#[%dw 2.0
-              output application/java
-              ---
-              {
-                  headers: attributes.headers,
-                  method: attributes.method,
-                  queryString: attributes.queryString
-            }]]]></apikit-soap:attributes>
+output application/java
+---
+{
+	headers: attributes.headers,
+	method: attributes.method,
+	queryString: attributes.queryString
+}]]]></apikit-soap:attributes>
         </apikit-soap:router>
     </flow>
     <flow name="OrderTshirt:\soapkit-config">
@@ -60,7 +60,7 @@ ns soap http://schemas.xmlsoap.org/soap/envelope
         </ee:transform>
     </flow>
     <flow name="TrackOrder:\soapkit-config">
-        <ee:transform>
+        <ee:transform doc:id="14fb501a-244c-4177-9822-454a240084fb">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/java

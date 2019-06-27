@@ -3,6 +3,7 @@
 		"password-hiding.xml"
 	],
 	"secureProperties": [
+		"http.port",
 		"password",
 		"birthdate"
 	],

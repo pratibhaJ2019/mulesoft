@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="b8b73dd1-c8c7-41ad-8c75-9f813abca2f2">
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<flow name="scatter-gatherFlow" doc:id="c20261d0-43d2-4b52-9f7d-18ecba7acfd5" >
+		<scheduler doc:name="Scheduler" doc:id="8c3d8c4e-ce0a-4c7a-981d-4f0693744d35" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<scatter-gather doc:name="Scatter-Gather" doc:id="fabcfa62-6702-480e-aba9-0db0a958b013" maxConcurrency="2">
+			<route >
+				<http:request method="GET" doc:name="Request" doc:id="8cb614c0-a7ae-4415-a54b-dbd2e6f094ac" config-ref="HTTP_Request_configuration" path="/flow-ref" responseTimeout="30000"/>
+			</route>
+			<route >
+				<http:request method="GET" doc:name="Request" doc:id="b6f586f2-5e8a-4144-8ec7-32f026c4b1d3" config-ref="HTTP_Request_configuration" path="/not-null"/>
+			</route>
+		</scatter-gather>
+		<ee:transform doc:name="Transform Message" doc:id="cd053404-ee3a-4128-93e4-cf12e891ab75">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="bbed0d51-8134-4f58-860c-925740feea91" />
+	</flow>
+</mule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<flow name="error-handling2Flow" doc:id="06895a9a-c738-40a5-a573-9ba4c6320644" >
+		<scheduler doc:name="Scheduler" doc:id="e2a75ac4-a16f-4e13-836f-d87a64cac726" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-payload value="#[8.8]" doc:name="Set Payload" doc:id="ebbaabd1-a197-4810-a3ef-8db89ea806d6" />
+		<validation:is-number numberType="INTEGER" doc:name="Is number" doc:id="fbd07f12-9d13-4790-9c0b-d40edd63592b" value="#[payload]" message="Not a integer"/>
+		<logger level="INFO" doc:name="Logger" doc:id="175937d6-59b1-40cb-bcee-29fa398819be" />
+	</flow>
+</mule>

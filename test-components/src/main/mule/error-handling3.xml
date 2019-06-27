@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<flow name="error-handling-parent" doc:id="12239dca-d34e-4419-9686-dd873aab29f4" >
+		<http:listener doc:name="Listener" doc:id="c6f65653-8327-4a8a-8789-af7676291815" config-ref="HTTP_Listener_config" path="/error-handling3"/>
+		<set-payload value='#["Ciao"]' doc:name="Ciao" doc:id="af554378-5cb6-4077-9232-c9a0c473575f" />
+		<flow-ref doc:name="Flow Reference" doc:id="3a4cd7f3-523b-4a07-9c94-94ae28236dc4" name="error-handling-child"/>
+		<set-payload value='#["Ciao 3"]' doc:name="Ciao 3" doc:id="dd35bf70-13e7-402c-8785-3c63c715e0e8" />
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="40e754b3-ce29-4ba5-a06d-03aabb860be0" >
+				<set-payload value='#["Ciao 2"]' doc:name="Ciao 2" doc:id="65c47217-fddf-4ee5-acfc-651e92d85b39" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="error-handling-child" doc:id="5c7d9bec-ed81-4f54-87a1-d8195f3d4141" >
+		<validation:is-number numberType="INTEGER" doc:name="Is number" doc:id="abc5f7ad-331c-4ebc-ab7b-c5495d666515" value="#[payload]"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="575e29f9-e097-46db-8dba-da7ae4f9657f" >
+				<set-payload value='#["Ciao 4"]' doc:name="Ciao 4" doc:id="2f5edf44-bd85-4116-9d5f-0a075f6ee943" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

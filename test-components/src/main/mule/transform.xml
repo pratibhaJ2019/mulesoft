@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="transformFlow" doc:id="d362dfc5-ae14-4510-adc1-acffa451d4f6" >
+		<scheduler doc:name="Scheduler" doc:id="d11132db-9d8b-4ceb-8454-b66ff2b65aa6" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="json" doc:id="6cb7c339-741a-4d6b-9268-b3b994d0843b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[{
+	Key: "value",
+	Key1: "value1",
+	Key2: "value2"
+},
+{
+	Key: "value",
+	Key1: "value1",
+	Key2: "value2"
+}]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="xml" doc:id="81567800-eadb-42fa-903f-c25160331286" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+root: {(
+	payload map(item, index) ->{
+		(index):item
+	}
+)}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="ea3b6124-9dd3-484b-9aff-62dd78925806" />
+	</flow>
+</mule>

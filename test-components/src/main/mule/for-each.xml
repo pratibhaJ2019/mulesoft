@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="for-eachFlow" doc:id="39b02ff8-867c-4eba-a1ac-b84cfada64c0" >
+		<scheduler doc:name="Scheduler" doc:id="f25109b1-4c97-46c4-a5c3-2d575faa34ff" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="89b8e352-24b9-47b9-b273-e4f76cb5e126" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+[
+	"obj1": {
+		"name": "boyuan1"
+	},
+	"obj2": {
+		"name": "boyuan2"
+	},
+	"obj3": {
+		name: "boyuan3"
+	}
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<set-variable value="8" doc:name="Set Variable" doc:id="bbd7eb8a-034d-40f1-8439-c888782379d6" variableName="value"/>
+		<foreach doc:name="For Each" doc:id="bc9c339c-dabb-46d2-98bd-34c22318cea3" batchSize="2">
+			<set-payload value="#[5]" doc:name="Set Payload" doc:id="1b62cb7b-b352-4e65-9e9a-100fe833cf77" />
+			<set-variable value="10" doc:name="Set Variable" doc:id="42fde4e6-7018-4202-a823-ce45b78fd46c" variableName="value"/>
+		</foreach>
+		<logger level="INFO" doc:name="Logger" doc:id="0831e9d5-5cee-458e-a244-9da80e7c1f0b" message="#[payload]"/>
+	</flow>
+</mule>

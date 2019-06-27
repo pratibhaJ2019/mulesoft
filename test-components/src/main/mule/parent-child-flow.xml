@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="59ed4068-bb0d-4c74-9c6a-67c88440fe28" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<flow name="parentFlow" doc:id="d1b4aa82-96c4-4be0-ab86-724c160f610f" >
+		<scheduler doc:name="Scheduler" doc:id="1ecc6e55-e5e3-4995-808a-c9062e1e5442" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-variable value='#["variable"]' doc:name="Set Variable" doc:id="c5884857-e50e-4174-b819-f89657032af5" variableName="variable"/>
+		<http:request method="GET" doc:name="Request" doc:id="dce7450c-a93d-4be6-86ba-a071dcc9290a" config-ref="HTTP_Request_configuration" path="/childflow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ae4f5927-1245-47b2-bf17-74da6c6d638b" message="#[payload]"/>
+	</flow>
+	<flow name="childFlow" doc:id="0174bc8f-b9e3-452f-b515-bc864775918e" >
+		<http:listener doc:name="Listener" doc:id="2e3e37d9-8eac-45a3-9bf5-4bf1badda4f1" config-ref="HTTP_Listener_config" path="/childflow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="59a1d7a7-d95d-4d39-b893-e900fef100e5" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="50585100-b363-4c2a-b9be-341c8126f5a4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	valore: "myVal"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f4cc3117-5bdf-42fe-83bf-eba8fea5cbf8" message="#[payload]"/>
+	</flow>
+</mule>

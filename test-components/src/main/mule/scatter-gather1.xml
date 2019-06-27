@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="scatter-gather1Flow" doc:id="3be17ab9-2b72-48dc-885c-323a87171953" >
+		<scheduler doc:name="Scheduler" doc:id="2ba56f2f-0d06-4bdd-8614-6b6f35e3a2dc" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<scatter-gather doc:name="Scatter-Gather" doc:id="8e9edd8a-e22a-4782-84e1-a0c00a251902" >
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="5dec46f3-249a-4798-9b48-70b3f8c8523d" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	scattergather: 1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</route>
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="74681389-6856-4f31-bc0f-26c04475cc5e" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	scattergather: 3
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</route>
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="e863c698-21ad-45df-b739-371ac5a21bf4" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	scattergather: 2
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</route>
+		</scatter-gather>
+		<logger level="INFO" doc:name="Logger" doc:id="9f85ca47-cf0d-4c7c-96a4-6396b71ab1b1" message="#[payload]" />
+		<ee:transform doc:name="to json" doc:id="51071f9a-b1a9-4c50-b88a-e8ef7df8f3fb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="to array" doc:id="e10b8e81-d72b-40e4-bc11-3266e1b01b2e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+	 payload."0" mapObject(value, key) -> {
+	(key): value
+},
+	 payload."1" mapObject(value, key) -> {
+	(key): value
+},
+	 payload."2" mapObject(value, key) -> {
+	(key): value
+}
+] ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<foreach doc:name="For Each" doc:id="c405c123-8a59-46fa-9424-9e6ea62d7bd9" >
+			<logger level="INFO" doc:name="Logger" doc:id="5c3ea430-23bc-4cda-aed0-691ab88607a3" />
+		</foreach>
+	</flow>
+</mule>

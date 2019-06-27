@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="error-payload" doc:id="b28bb8ca-0c52-44ca-8764-4c60f246bf2b" >
+		<set-payload value='#["Raised error from Set Payload"]' doc:name="Set Payload" doc:id="a6cbb184-0185-4e12-83b4-03005f3df32a" />
+	</sub-flow>
+	<flow name="error-handlingFlow" doc:id="2569e913-32f0-483f-a083-394140b45ad3" >
+		<http:listener doc:name="Listener" doc:id="86b0fa9a-c72b-4149-b23d-d4e899e9f7ef" config-ref="HTTP_Listener_config" path="/error-handling">
+		</http:listener>
+		<flow-ref doc:name="error-chiledFlow" doc:id="cb72530e-ea9d-4b9d-b342-bc4d4576468d" name="error-childFlow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9d99ae9d-ab4c-4dde-bbb2-72bb7ef1fd51" message="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9b63d7de-9259-47f1-9b03-270999887b06" />
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error " doc:id="f3c3fae6-6495-4427-8325-37e1595f1271" >
+				<flow-ref doc:name="error-payload" doc:id="1fdfa0b3-038d-4145-8db6-6a93e9e80611" name="error-payload"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="error-childFlow" doc:id="cd85e86d-ee84-466b-b9c7-91fef42f2270" >
+		<http:listener doc:name="Listener" doc:id="f86e9765-7a41-4736-9d7c-0e562c5aeced" config-ref="HTTP_Listener_config" path="/error-handling-b"/>
+		<raise-error doc:name="Raise error" doc:id="1e59abe1-8956-4f4e-b898-54597fe92b59" type="M:T" description="Raised error" />
+		<logger level="INFO" doc:name="Logger" doc:id="320e14cb-307e-467c-b100-db12fd559358" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error" doc:id="aaa12461-f177-465d-abc0-50b3b5447632" >
+				<flow-ref doc:name="error-payload" doc:id="b395e0cf-b13d-49c3-a1fc-07dd160084ae" name="error-payload"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

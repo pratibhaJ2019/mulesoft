@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="dataweaveFlow" doc:id="628c81cd-95b2-4546-b656-1075c865e216" >
+		<scheduler doc:name="Scheduler" doc:id="603b0155-23dc-430a-a617-d65be67228f7" >
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="ArrayList" doc:id="c01f32dd-de6e-4599-8b03-db83ca50bc81" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+//[{
+//	"firstname": "Max",
+//	"lastname": "Mule"
+//},
+//{
+//	"firstname": "Molly",
+//	"lastname": "Mule"
+//}]
+---
+[{
+	"firstname": "Max",
+	"lastname": "Mule"
+},
+{
+	"firstname": "Molly",
+	"lastname": "Mule"
+}]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="XML" doc:id="936431d7-4931-47b8-9c80-1d014d0aaa0c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+users
+: {
+	( payload map (object, index) -> {
+		fname: object.firstname,
+		lname: object.lastname
+	})
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="22824965-7e9a-4961-b800-a15d0a217035" />
+	</flow>
+</mule>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="bdaf2556-697f-47b4-a129-6daae4f856d0" file="config/config.yaml" />
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="a5c98d63-4e30-45bb-bd34-9d07a1ac454a" >
+		<db:oracle-connection host="localhost" user="boyuan" password="boyuan" serviceName="ORCL" />
+	</db:config>
+	<configuration doc:name="Configuration_errorHandler" doc:id="2325b2d2-3251-4b22-ae5b-e9469db5f60b" defaultErrorHandler-ref="configurationError_Handler" />
+	<error-handler name="configurationError_Handler" doc:id="e86c1418-d82e-4016-8056-0166bfaae60f" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a4c9aa3a-01d3-4936-8e64-c476a68a6502" >
+			<ee:transform doc:name="error.description" doc:id="5e7814f8-857d-4e82-8345-371eba031971" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": error.description
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+</mule>

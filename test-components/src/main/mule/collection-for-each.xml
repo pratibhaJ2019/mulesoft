@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<flow name="test-componentsFlow" doc:id="50202263-eae1-40ac-86e4-3b1b09aff031" >
+		<scheduler doc:name="Scheduler" doc:id="38129d6a-fc81-44a1-be42-998d50304fdd" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="xml" doc:id="d958a52e-2c1a-4f40-ba31-382758045d00" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+//[1,2,3,3]
+---
+root
+: elements: {
+	eleme @(attri:"ciao"): "ciao"
+	
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="json" doc:id="ea63344e-f736-4752-95d2-8193342f80f8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	elem: payload.root.elements.eleme,
+	attri: payload.root.elements.eleme.@attri
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<foreach doc:name="For Each" doc:id="00445071-4f43-43f8-97c4-487fe03dedfb" >
+			<file:write doc:id="6aa6149e-1bf7-4dee-ab03-2c1ee25a5ff5" path="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\resources\output\object-to-file.txt" />
+		</foreach>
+		<logger level="INFO" doc:name="Logger" doc:id="bd2fad13-c3e4-42d9-9fd6-145c8316ef7b" message="#[payload]"/>
+	</flow>
+</mule>

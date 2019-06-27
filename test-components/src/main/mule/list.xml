@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="listFlow" doc:id="918601b1-ccbc-4c41-adb3-8ccd685175b1" >
+		<scheduler doc:name="Scheduler" doc:id="969dfaa4-3f79-4c38-bf82-a2e24b1ca865" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<file:list doc:name="List" doc:id="2a388252-44e8-489f-881a-1ba1a8fb5bca" directoryPath="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\examples"/>
+		<ee:transform doc:name="Transform Message" doc:id="3efe1ba7-d1e2-4eba-9804-ec1a99c8f57b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="52971b8a-9b62-4e50-b47e-6fee426b66b0" message="end"/>
+	</flow>
+</mule>

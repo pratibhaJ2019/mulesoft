@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="e019dc85-6319-4e83-ac57-e4fbb4de281e" >
+		<file:connection workingDir="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\resources" />
+	</file:config>
+	<sub-flow name="pollSubflow" doc:id="a8a520b7-92c0-461c-897c-20119dfb1925" >
+		<ee:transform doc:name="Transform Message" doc:id="5285a899-9726-4137-9619-3ac82a20371e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+---
+credentials
+: {
+	credential: {
+		nome: "nome1",
+		cognome: "cognome1"
+	},
+	credential: {
+		nome: "nome2",
+		cognome: "cognome2"
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<set-variable value="This is a test payload" doc:name="testPayload" doc:id="c864da8b-16cb-4de8-baf5-38a78ccc0623" variableName="testPayload" />
+		<logger level="INFO" doc:name="Logger" doc:id="b9a6ad67-5570-4b0a-a214-607f4c960991" />
+	</sub-flow>
+	<flow name="pollFlow" doc:id="85802fe7-cedc-4148-a8de-cec009031a4d" >
+		<scheduler doc:name="Scheduler" doc:id="df3144ef-8ade-47de-8542-1428d16115a4" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<file:read doc:name="Read" doc:id="18c61f85-6027-4b46-96cf-95dda8e5f20d" config-ref="File_Config" path="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\resources\accounts.csv"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7abff7b4-8df4-4c89-ad84-4bc28109b87a" message="#[payload]"/>
+		<flow-ref doc:name="Flow Reference" doc:id="8f2d85bb-ea74-4d1c-ab2a-268f7409aa15" name="pollSubflow" target="testPayload"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a22a0587-e0ef-499c-ae02-4377bd33c648" />
+	</flow>
+
+</mule>

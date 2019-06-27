@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="parent2Flow" doc:id="9b796ac0-416d-4d1d-a168-46a3062ac017" >
+		<scheduler doc:name="Scheduler" doc:id="3bffb59c-d1d3-4688-8121-3c95a6fbd160" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="payload" doc:id="abc8e235-87cb-47ad-886c-a872220d8f32" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	fieldName: "parent1Flow"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="payload" doc:id="b6d5a9c7-07e7-4b2c-aa38-fe8fa6bc8fe3" target="payload" targetValue="#[payload]" name="child2Flow"/>
+		<logger level="INFO" doc:name="payload" doc:id="eafb5f0b-1d19-4f12-9414-629d99421aa0" message="#[payload]"/>
+	</flow>
+	<flow name="child2Flow" doc:id="2206548f-79bd-45b8-8015-67cd27ea42f6" >
+		<ee:transform doc:name="payload2" doc:id="1c4b2892-ad16-49ce-a2d3-45491e0c94aa" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	fieldName: "child2Flow"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="payload2" doc:id="31ec85bf-ef32-43f6-a352-5b56b96d76a1" message="#[payload]"/>
+	</flow>
+</mule>

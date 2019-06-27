@@ -1,0 +1,42 @@
+#%RAML 1.0
+title: Test
+
+/{uriParam}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "nome": "Boyuan",
+                "cognome": "Zhang",
+                "description": "Questo è un esempio",
+                "datetime": 1341533193
+              }
+
+/api:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "nome": "Boyuan",
+                "cognome": "Zhang",
+                "description": "Questo è un esempio",
+                "datetime": 1341533193
+              }
+  get:
+    responses:
+      200:
+        body: 
+          application/json:
+            example: |
+              {
+                "nome": "Boyuan",
+                "cognome": "Zhang",
+                "description": "Questo è un esempio",
+                "datetime": 1341533193
+              }
