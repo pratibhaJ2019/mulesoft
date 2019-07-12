@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="Concatenate_Two_Strings_Into_ASingle_String" doc:id="7dd6b753-be73-4ea2-a0f1-c5bb1839429c" initialState="stopped">
+		<ee:transform doc:name="Transform Message" doc:id="5222ce93-7808-40bf-9caf-d77d55cfb290" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{ myString: ("hello" ++ "World") }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Transform_JSON_Input_To_XML_Output" doc:id="86eb117a-ec9f-491f-b665-cc91aec1025a" >
+		<ee:transform doc:name="Transform Message" doc:id="48db41b7-cc8f-4772-9ea2-ab9e7840abec" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{ "myString" : ("helloWorld") }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Supported_data_types" doc:id="f7682cf2-f23e-4a6f-8030-7988e31ec568" >
+		<ee:transform doc:name="Transform Message" doc:id="ae3bdd94-5ffc-4f0b-b033-aed159b77d1c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  /*
+   * A multi-line
+   * comment here.
+   */
+  myString: "hello world",
+  myNumber: 123,
+  myFloatingPointNumber: 123.456,
+  myVeryBigNumber: 12341234134123412341234123,
+  myDate: |2018-12-07|,
+  myTime: |11:55:56|,
+  myDateTime: |2018-10-01T23:57:59-03:00|,
+  myBoolean: true,
+  myArray: [ 1, 2, 3, 5, 8],
+  myMixedArray: [ 1, 2, "blah", { hello: "there" } ],
+  myObjectKeyValuePair: { innerKey: "innerValue" },
+  myObjectWithConditionalField: { a : { b : 1, ( c : 2 ) if true, (d : 4) if false } },
+  myNull: null,
+  myBinary: "abcd1234123" as Binary
+  //A one-line comment here.
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Define_and_a_DataWeave_Variable_as_Input" doc:id="54825108-290d-45d1-9cfb-c4987f51b7e2" >
+		<ee:transform doc:name="Transform Message" doc:id="00d76887-017c-4dde-b23c-435aa7aa0214" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="DataWeave_Function_In_DataWeave_Variable" doc:id="ccd4b285-c22d-4f0f-a15d-e69d86bc24ee" >
+		<ee:transform doc:name="Transform Message" doc:id="61603a13-82d1-4ac7-bd10-6f8a02e89eb7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myJson = {
+  a: avg([1, 1000]),
+  b: avg([1, 2, 3])
+}
+output application/json
+---
+myJson]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Read_Transform_Select_Content_from_an_Input" doc:id="1e68d130-4341-4522-8164-66920513b8ca" >
+		<ee:transform doc:name="Transform Message" doc:id="f4f3a5fb-1008-43c3-9f79-d6ace27918d0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myRead = read("<car><color>red</color></car>",
+                "application/xml")
+output application/json
+---
+{
+  mySelection : myRead.car
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Read_File_Contents_With_a_DataWeave_Function" doc:id="67f45d7f-b74e-4278-97c2-7d7b4a99f0ae" >
+		<ee:transform doc:name="Transform Message" doc:id="6b6e5653-a079-4f3d-a088-da044a5f2eab" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+readUrl("classpath://myJson.json", "application/json")]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Map_Elements_from_an_array_into_an_Object" doc:id="a28f1cce-2f12-4c36-8628-8c7787b7efda" >
+		<ee:transform doc:name="Transform Message" doc:id="232442e3-4683-4e7b-84de-a47b0214e4a4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  (
+    ["a", "b", "c"] map ((value, index) -> {
+        (index): value
+    })
+  )
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Pluck_Values_from_an_Object_into_an_Array" doc:id="3e99f719-ce87-432c-8d65-0f27637a41c7" >
+		<ee:transform doc:name="Transform Message" doc:id="890d78b3-6220-4961-a0dd-2656035f642a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "0": "a",
+  "1": "b",
+  "2": "c"
+} pluck ((value) -> value)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Map_and_Merge_Fields" doc:id="cde75fad-ce3a-4d49-938f-7bb404e8f130" >
+		<ee:transform doc:name="Transform Message" doc:id="0736e4b1-6696-4750-a096-f923077a194a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myVar = [
+  { bookId: 101,
+    title: "world history",
+    price: "19.99"
+  },
+  {
+    bookId: 202,
+    title: 'the great outdoors',
+    price: "15.99"
+  }
+]
+var myVar2 = [
+  {
+    bookId: 101,
+    author: "john doe"
+  },
+  {
+    bookId: 202,
+    author: "jane doe"
+  }
+]
+output application/json
+---
+myVar map (item, index) -> using (id = item.bookId) {
+	"id" : id,
+	"topic" : item.title,
+	"cost" : item.price as Number,
+	(myVar2 filter ($.*bookId contains id) map (item) -> {
+		author : item.author
+	})
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="CSV" doc:id="97dab3d7-ce3f-4d7c-b720-57676f72589e" >
+		<ee:transform doc:name="Transform Message" doc:id="48d6f157-bf98-4b25-b181-55390e5682d2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/csv
+---
+[
+  {
+    "Name":"Mariano",
+    "Last Name":"De achaval"
+  },
+  {
+    "Name":"Leandro",
+    "Last Name":"Shokida"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

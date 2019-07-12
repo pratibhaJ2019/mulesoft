@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="testFlow" doc:id="db19a831-5384-4ada-a572-31edde4deb09">
+		<scheduler doc:name="Scheduler" doc:id="fb407376-07d9-4286-8609-64a9284b88a7">
+			<scheduling-strategy>
+				<fixed-frequency timeUnit="DAYS" />
+			</scheduling-strategy>
+		</scheduler>
+		<scripting:execute doc:id="a9e9919f-8ad9-48f7-956c-c3adb3722ca0"
+			engine="jython" doc:name="Python">
+			<scripting:code>def factorial(n):
+	if n==0: return 1
+	return n * factorial(n-1)
+
+result = factorial(10)</scripting:code>
+
+		</scripting:execute>
+		<logger level="INFO" doc:name="payload"
+			doc:id="e78022ee-9b64-4e6b-bb03-ee5d53d66d4c" message="#[payload]"/>
+	</flow>
+
+
+
+</mule>
