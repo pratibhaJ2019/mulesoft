@@ -23,6 +23,26 @@ result = factorial(10)</scripting:code>
 		<logger level="INFO" doc:name="payload"
 			doc:id="e78022ee-9b64-4e6b-bb03-ee5d53d66d4c" message="#[payload]"/>
 	</flow>
+	<flow name="PythonFlow" doc:id="7f7fd8a5-5e99-4201-a05a-b9722c36ee79" >
+		<scheduler doc:name="Scheduler" doc:id="95074501-b582-432b-9e0b-07d4105aba96" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-payload value="#[6 as Number]" doc:name="6" doc:id="b2b9502e-2d3e-40af-8534-86a3fa883b3f" />
+		<scripting:execute doc:name="Execute" doc:id="e1d77408-ea39-4b4c-bd9c-6a7a449a36cf" engine="jython">
+			<scripting:code >def factorial(n):
+	if n == 0: 
+		return 1
+	return n * factorial(n-1)
+result = factorial(payload)</scripting:code>
+			<scripting:parameters ><![CDATA[#[{
+	initialValue: payload	
+}]]]></scripting:parameters>
+		</scripting:execute>
+		<logger level="INFO" doc:name="payload" doc:id="9ab692a1-90b7-4422-bcce-75cbe8b8992f" message="#[payload]"/>
+	</flow>
+
 
 
 
