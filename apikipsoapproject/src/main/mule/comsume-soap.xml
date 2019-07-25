@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="a041bbcb-9216-4dbf-9c90-81dbb0e94ef9" >
+		<wsc:connection wsdlLocation="http://mu.learn.mulesoft.com/delta?wsdl" service="TicketServiceService" port="TicketServicePort"/>
+	</wsc:config>
+	<flow name="comsume-soapFlow" doc:id="5ea9084e-242f-4706-8ab3-eb4075b04796" >
+		<scheduler doc:name="Scheduler" doc:id="1a443f4b-1365-4ebe-822f-90a75df115ec" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Start" doc:id="30a799eb-f01e-4907-a283-b12ba5487845" message="Start"/>
+		<ee:transform doc:name="SOAP input" doc:id="5d8cfba6-cf05-420e-95bb-f0c7e820d846" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://soap.training.mulesoft.com/
+---
+{
+	ns0#findFlight: {
+		destination: "SFO"
+	}
+}
+]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+			</ee:variables>
+		</ee:transform>
+		<wsc:consume doc:id="23904b82-a7a3-4c7b-ad29-1ee2997ddfff" config-ref="Web_Service_Consumer_Config" operation="findFlight" target="SOAP_Response">
+			<wsc:message >
+				<wsc:headers ><![CDATA[#[%dw 2.0
+output application/xml
+---
+headers: {
+	tracker: ""
+}]]]></wsc:headers>
+			</wsc:message>
+		</wsc:consume>
+		<logger level="INFO" doc:name="Logger" doc:id="bfccb9b1-67e4-4dfa-9a92-956df0d02f2d" message="#[payload]"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="5af98c0e-1524-4468-94f1-82cae11c441c" >
+				<logger level="INFO" doc:name="Logger" doc:id="d4dfcbf2-0b73-4cd8-a37b-039283d3c753" message="#[error.description]"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

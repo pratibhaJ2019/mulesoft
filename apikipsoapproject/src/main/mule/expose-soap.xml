@@ -64,6 +64,7 @@ ns soap http://schemas.xmlsoap.org/soap/envelope/
             </ee:message>
         </ee:transform>
 		<apikit-soap:fault operation="ListInventory" fault="TshirtFault" doc:name="SOAP Fault" doc:id="a52718ab-f9a1-4599-8b51-602c22636e34" config-ref="soapkit-config"/>
+		<logger level="INFO" doc:name="payload" doc:id="2903a3ec-d413-4b72-9b60-baf9860c1165" message="#[payload]"/>
     </flow>
     <flow name="TrackOrder:\soapkit-config">
         <ee:transform doc:id="cfccb1c3-9ab5-46ce-8a86-ba9caf3f45de">
