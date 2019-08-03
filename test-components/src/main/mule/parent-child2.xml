@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="parent2Flow" doc:id="9b796ac0-416d-4d1d-a168-46a3062ac017" >
 		<scheduler doc:name="Scheduler" doc:id="3bffb59c-d1d3-4688-8121-3c95a6fbd160" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<ee:transform doc:name="payload" doc:id="abc8e235-87cb-47ad-886c-a872220d8f32" >

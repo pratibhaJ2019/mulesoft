@@ -11,7 +11,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="parentFlow" doc:id="d1b4aa82-96c4-4be0-ab86-724c160f610f" >
 		<scheduler doc:name="Scheduler" doc:id="1ecc6e55-e5e3-4995-808a-c9062e1e5442" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<set-variable value='#["variable"]' doc:name="Set Variable" doc:id="c5884857-e50e-4174-b819-f89657032af5" variableName="variable"/>

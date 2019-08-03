@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:java="http://www.mulesoft.org/schema/mule/java" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/java/current/mule-java.xsd">
+	<flow name="add-elementsFlow" doc:id="2e5c86b2-1d17-4bb5-b26d-240833a54b64" >
+		<scheduler doc:name="Scheduler" doc:id="9a0a36bb-ee7d-4b72-999d-5c7fa3d7a6a8" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<java:new doc:id="4883ef31-95a4-461f-a026-f749fe06fc17" class="MyMap" target="javaInstance" constructor="MyMap()">
+		</java:new>
+		<foreach doc:name="For Each" doc:id="fd1f2020-99ad-4345-81a7-bd8b930d737d" collection="['1','2','3','4','4']">
+			<java:invoke doc:name="Invoke" doc:id="366a9d1e-aa3e-40a2-885a-ab3f5181093f" instance="#[vars.javaInstance]" class="MyMap" method="hashMap(String,String)">
+			<java:args><![CDATA[#[{'arg0': payload,'arg1':"valore"}]]]></java:args>
+		</java:invoke>
+			<logger level="INFO" doc:name="Logger" doc:id="1a3c9931-931e-479d-88a3-82004b00fdd5" message="#[payload]"/>
+		</foreach>
+		<logger level="INFO" doc:name="Logger" doc:id="23f0146c-a39a-404e-b70a-9982d8be7e7b" />
+	</flow>
+</mule>

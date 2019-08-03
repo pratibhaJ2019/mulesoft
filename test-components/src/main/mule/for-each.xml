@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="for-eachFlow" doc:id="39b02ff8-867c-4eba-a1ac-b84cfada64c0" >
 		<scheduler doc:name="Scheduler" doc:id="f25109b1-4c97-46c4-a5c3-2d575faa34ff" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<ee:transform doc:name="Transform Message" doc:id="89b8e352-24b9-47b9-b273-e4f76cb5e126" >

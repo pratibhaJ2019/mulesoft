@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 	<flow name="error-handling2Flow" doc:id="06895a9a-c738-40a5-a573-9ba4c6320644" >
 		<scheduler doc:name="Scheduler" doc:id="e2a75ac4-a16f-4e13-836f-d87a64cac726" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<set-payload value="#[8.8]" doc:name="Set Payload" doc:id="ebbaabd1-a197-4810-a3ef-8db89ea806d6" />

@@ -5,28 +5,28 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
-	<flow name="DBConnectionFlow" doc:id="9339c301-38a6-4dc1-ab42-b83714b8017c" >
-		<scheduler doc:name="Scheduler" doc:id="9dd248e2-07f7-4076-b92f-99f4d426df8e" >
-			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS" startDelay="500"/>
-			</scheduling-strategy>
-		</scheduler>
-		<db:select doc:name="Select" doc:id="71329a5d-e9d4-4462-8aa6-d1fdc58f0b5a" config-ref="Database_Config">
-			<db:sql >SELECT * FROM employees</db:sql>
-		</db:select>
-		<foreach doc:name="For Each" doc:id="62d948b6-d20c-448c-8b37-0eff91bbdd87" >
-			<file:write doc:name="Write" doc:id="8f2a64c4-0f88-4fce-9cf6-1d1184614b3b" path="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\resources\output\MyOracleDBOuput.txt"/>
-		</foreach>
-		<logger level="INFO" doc:name="Logger" doc:id="308096d5-4a2d-453b-a555-15b848f640d1" message="#[payload]"/>
-		<logger level="INFO" doc:name="Logger" doc:id="20b42836-2bea-45a7-95f0-0a2c57854e51" />
-	</flow>
-	<flow name="DBConnectionFlow1" doc:id="73e45742-2d89-4098-916a-00c9a9a22e83" initialState="stopped">
-		<db:listener table="Employees" doc:name="On Table Row" doc:id="885e048c-b45c-4068-9039-f2d7e3ac7ae7" config-ref="Database_Config" watermarkColumn="username" idColumn="username">
-			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
-			</scheduling-strategy>
-		</db:listener>
-		<logger level="INFO" doc:name="Logger" doc:id="c5c580c1-b093-4e7a-87eb-c69d49d1448d" message="#[payload]"/>
-		<logger level="INFO" doc:name="Logger" doc:id="5f73d0c2-cba0-4c7d-af63-f3e488c51d56" message="#[payload]"/>
-	</flow>
+<!-- 	<flow name="DBConnectionFlow" doc:id="9339c301-38a6-4dc1-ab42-b83714b8017c" > -->
+<!-- 		<scheduler doc:name="Scheduler" doc:id="9dd248e2-07f7-4076-b92f-99f4d426df8e" > -->
+<!-- 			<scheduling-strategy > -->
+<!-- 				<fixed-frequency timeUnit="DAYS" startDelay="500"/> -->
+<!-- 			</scheduling-strategy> -->
+<!-- 		</scheduler> -->
+<!-- 		<db:select doc:name="Select" doc:id="71329a5d-e9d4-4462-8aa6-d1fdc58f0b5a" config-ref="Database_Config"> -->
+<!-- 			<db:sql >SELECT * FROM employees</db:sql> -->
+<!-- 		</db:select> -->
+<!-- 		<foreach doc:name="For Each" doc:id="62d948b6-d20c-448c-8b37-0eff91bbdd87" > -->
+<!-- 			<file:write doc:name="Write" doc:id="8f2a64c4-0f88-4fce-9cf6-1d1184614b3b" path="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\resources\output\MyOracleDBOuput.txt"/> -->
+<!-- 		</foreach> -->
+<!-- 		<logger level="INFO" doc:name="Logger" doc:id="308096d5-4a2d-453b-a555-15b848f640d1" message="#[payload]"/> -->
+<!-- 		<logger level="INFO" doc:name="Logger" doc:id="20b42836-2bea-45a7-95f0-0a2c57854e51" /> -->
+<!-- 	</flow> -->
+<!-- 	<flow name="DBConnectionFlow1" doc:id="73e45742-2d89-4098-916a-00c9a9a22e83" initialState="stopped"> -->
+<!-- 		<db:listener table="Employees" doc:name="On Table Row" doc:id="885e048c-b45c-4068-9039-f2d7e3ac7ae7" watermarkColumn="username" idColumn="username"> -->
+<!-- 			<scheduling-strategy > -->
+<!-- 				<fixed-frequency timeUnit="DAYS"/> -->
+<!-- 			</scheduling-strategy> -->
+<!-- 		</db:listener> -->
+<!-- 		<logger level="INFO" doc:name="Logger" doc:id="c5c580c1-b093-4e7a-87eb-c69d49d1448d" message="#[payload]"/> -->
+<!-- 		<logger level="INFO" doc:name="Logger" doc:id="5f73d0c2-cba0-4c7d-af63-f3e488c51d56" message="#[payload]"/> -->
+<!-- 	</flow> -->
 </mule>

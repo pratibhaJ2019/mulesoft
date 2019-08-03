@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="scatter-gather1Flow" doc:id="3be17ab9-2b72-48dc-885c-323a87171953" >
 		<scheduler doc:name="Scheduler" doc:id="2ba56f2f-0d06-4bdd-8614-6b6f35e3a2dc" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<scatter-gather doc:name="Scatter-Gather" doc:id="8e9edd8a-e22a-4782-84e1-a0c00a251902" >

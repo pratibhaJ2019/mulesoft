@@ -34,7 +34,7 @@ credentials
 	<flow name="pollFlow" doc:id="85802fe7-cedc-4148-a8de-cec009031a4d" >
 		<scheduler doc:name="Scheduler" doc:id="df3144ef-8ade-47de-8542-1428d16115a4" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<file:read doc:name="Read" doc:id="18c61f85-6027-4b46-96cf-95dda8e5f20d" config-ref="File_Config" path="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\resources\accounts.csv"/>

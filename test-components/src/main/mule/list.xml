@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="listFlow" doc:id="918601b1-ccbc-4c41-adb3-8ccd685175b1" >
 		<scheduler doc:name="Scheduler" doc:id="969dfaa4-3f79-4c38-bf82-a2e24b1ca865" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<file:list doc:name="List" doc:id="2a388252-44e8-489f-881a-1ba1a8fb5bca" directoryPath="C:\Users\BoyuanZhang\Desktop\MUFundamentals4.1_studentFiles_22sept2018\examples"/>

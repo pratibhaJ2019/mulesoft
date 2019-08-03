@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 	<flow name="test-componentsFlow" doc:id="50202263-eae1-40ac-86e4-3b1b09aff031" >
 		<scheduler doc:name="Scheduler" doc:id="38129d6a-fc81-44a1-be42-998d50304fdd" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<ee:transform doc:name="xml" doc:id="d958a52e-2c1a-4f40-ba31-382758045d00" >
