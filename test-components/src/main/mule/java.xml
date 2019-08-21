@@ -9,13 +9,13 @@ http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/jav
 	<flow name="add-elementsFlow" doc:id="2e5c86b2-1d17-4bb5-b26d-240833a54b64" >
 		<scheduler doc:name="Scheduler" doc:id="9a0a36bb-ee7d-4b72-999d-5c7fa3d7a6a8" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
-		<java:new doc:id="4883ef31-95a4-461f-a026-f749fe06fc17" class="MyMap" target="javaInstance" constructor="MyMap()">
+		<java:new doc:id="4883ef31-95a4-461f-a026-f749fe06fc17" class="java.util.HashMap" target="javaInstance" constructor="HashMap()">
 		</java:new>
 		<foreach doc:name="For Each" doc:id="fd1f2020-99ad-4345-81a7-bd8b930d737d" collection="['1','2','3','4','4']">
-			<java:invoke doc:name="Invoke" doc:id="366a9d1e-aa3e-40a2-885a-ab3f5181093f" instance="#[vars.javaInstance]" class="MyMap" method="hashMap(String,String)">
+			<java:invoke doc:name="Invoke" doc:id="366a9d1e-aa3e-40a2-885a-ab3f5181093f" instance="#[vars.javaInstance]" class="MyHashMap" method="hashMap(String,String)">
 			<java:args><![CDATA[#[{'arg0': payload,'arg1':"valore"}]]]></java:args>
 		</java:invoke>
 			<logger level="INFO" doc:name="Logger" doc:id="1a3c9931-931e-479d-88a3-82004b00fdd5" message="#[payload]"/>

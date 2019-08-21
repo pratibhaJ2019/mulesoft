@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="batchFlow" doc:id="56e5d297-bcdd-426b-8a9b-edbbff4193d7" >
 		<scheduler doc:name="Scheduler" doc:id="8ace6bc1-9a1d-444a-b9b0-bc45a8efc144" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<ee:transform doc:name="to [1,2,3]" doc:id="f385978e-0e44-4bd4-b592-5701185053d5" >
@@ -39,7 +39,7 @@ output application/java
 	<flow name="batchFlow1" doc:id="1ac7c378-27a2-46fb-9503-d9c0e3f708a0" >
 		<scheduler doc:name="Scheduler" doc:id="f77859c2-60c0-4bb8-8c20-d73a212aa6b2" >
 			<scheduling-strategy >
-				<fixed-frequency timeUnit="DAYS"/>
+				<fixed-frequency timeUnit="DAYS" startDelay="1000"/>
 			</scheduling-strategy>
 		</scheduler>
 		<ee:transform doc:name="[1,2,3,4,5,6]" doc:id="c1687188-3e92-49d1-8212-3f84ec8ef28c" >

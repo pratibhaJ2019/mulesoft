@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd">
+	<sockets:listener-config name="Sockets_Listener_config_8084" doc:name="Sockets Listener config" doc:id="b47a4d33-63b4-4055-875a-ccdb4ca070a3" >
+		<sockets:tcp-listener-connection host="localhost" port="8084" keepAlive="true">
+			<sockets:protocol >
+				<sockets:streaming-protocol rethrowExceptionOnRead="true" />
+			</sockets:protocol>
+		</sockets:tcp-listener-connection>
+	</sockets:listener-config>
+	<flow name="socket-listenerFlow" doc:id="ebd32598-a55c-4948-a57f-f1403e9c4491" >
+		<sockets:listener doc:name="Listener" doc:id="e6716dd0-bbd9-4114-b292-1bc368bd3abb" config-ref="Sockets_Listener_config_8084">
+			<repeatable-in-memory-stream />
+		</sockets:listener>
+		<logger level="INFO" doc:name="payload" doc:id="ea2c63cb-1ba4-4d32-9e48-5d6f4f535a80" message="#[payload]"/>
+		<set-payload value="#[payload]" doc:name="payload" doc:id="9c300491-e369-4b19-9b5a-2520d951bec9" />
+	</flow>
+</mule>

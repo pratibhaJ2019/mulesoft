@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sockets:request-config name="Sockets_Request_config_5000" doc:name="Sockets Request config" doc:id="f5b55819-6071-4b45-bbdb-2d14a5f8acc8" >
+		<sockets:tcp-requester-connection host="0.0.0.0" port="21" keepAlive="true">
+			<sockets:protocol >
+				<sockets:eof-protocol rethrowExceptionOnRead="true" />
+			</sockets:protocol>
+		</sockets:tcp-requester-connection>
+	</sockets:request-config>
+	<flow name="socketFlow" doc:id="e2c0722b-1e5a-4311-8055-da23fc034f66" >
+		<scheduler doc:name="Scheduler" doc:id="650bb2ba-5036-41c5-b2b3-881136acaa82" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<try doc:name="Try" doc:id="57366c89-121e-4636-8926-79026a110677" >
+			<sockets:send-and-receive doc:name="Send and receive" doc:id="b75b076b-631d-41a9-8d36-3b9578ccae49" config-ref="Sockets_Request_config_5000" doc:description="zbzbzbzbzbzbbz">
+				<sockets:content ><![CDATA[#["10.242.0.12    ECO0000002ST200000010005         LOCK                                               AMENDMENT                                                                                                                                                                                                                                                                                                                                                                                                                    "]]]></sockets:content>
+			</sockets:send-and-receive>
+			<logger level="INFO" doc:name="payload" doc:id="c38830a0-123f-467d-aab1-0b0b8f8b5106" message="#[payload]"/>
+			<error-handler >
+				<on-error-propagate enableNotifications="false" logException="true" doc:name="On Error Propagate" doc:id="917f0606-2e7b-444e-995b-d815b0b439e0" >
+					<logger level="INFO" doc:name="payload" doc:id="7e026e1b-0581-41e3-ad0f-f992ff01d410" message="#[payload]"/>
+				</on-error-propagate>
+			</error-handler>
+		</try>
+		<logger level="INFO" doc:name="payload" doc:id="faff5fe0-8d19-41d5-a81b-f6b2536a5bbb" message="#[payload]"/>
+	</flow>
+</mule>

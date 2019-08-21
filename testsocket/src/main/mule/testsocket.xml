@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+	<flow name="testsocketFlow" doc:id="a7cc8e36-6f92-4aa2-af7c-85d76c931f10" >
+		<scheduler doc:name="Scheduler" doc:id="96192245-3943-48c0-b1a7-0408ea72067d" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<scripting:execute doc:id="ac52e899-bd27-40e4-9556-f37ec8735588" engine="jython">
+			<scripting:code >import socket
+
+def netcat(hostname, port, content):
+    res = &quot;&quot;
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((hostname, port))
+    s.sendall(content)
+    s.shutdown(socket.SHUT_WR)
+    while 1:
+        data = s.recv(1024)
+        if data == &quot;&quot;:
+            break
+        res = repr(data)
+        print(&quot;res: &quot;)
+        print(res)
+        return res
+    print &quot;Connection closed.&quot;
+    s.close()
+	
+result = netcat(&quot;srvjpsysdatas.mulesoft.local&quot;, 5861, &quot;10.242.0.12    ECO0000002ST200000010005         LOCK                                               AMENDMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                           &quot;)</scripting:code>
+			<scripting:parameters ><![CDATA[#[{
+	initialValue: ""
+}]]]></scripting:parameters>
+		</scripting:execute>
+		<logger level="INFO" doc:name="payload" doc:id="e16a4da4-9aa4-4a88-9ab1-386c29fc80e6" message="#[payload]"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a3cd390d-48ba-4104-b650-c0ff8aea5034" >
+				<logger level="INFO" doc:name="payload" doc:id="d7848487-1cb4-4d3a-a992-205480c7e4dc" message="#[payload]"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>
