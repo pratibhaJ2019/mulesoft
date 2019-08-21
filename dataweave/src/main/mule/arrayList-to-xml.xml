@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<flow name="dataweaveFlow" doc:id="628c81cd-95b2-4546-b656-1075c865e216" >
 		<scheduler doc:name="Scheduler" doc:id="603b0155-23dc-430a-a617-d65be67228f7" >
 			<scheduling-strategy >
-				<fixed-frequency />
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
 			</scheduling-strategy>
 		</scheduler>
 		<ee:transform doc:name="ArrayList" doc:id="c01f32dd-de6e-4599-8b03-db83ca50bc81" >

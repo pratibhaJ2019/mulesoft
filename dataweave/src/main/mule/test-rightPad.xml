@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:workday="http://www.mulesoft.org/schema/mule/workday" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="rep-empty-spaceFlow" doc:id="bbf8f51d-7f9c-4729-87e6-9ecf42aa8a48" >
+		<scheduler doc:name="Scheduler" doc:id="131db957-20d3-4418-a982-f5810689c05a" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="af8786ae-b811-4d1f-8d0a-434446a7c2dd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+
+import java!dataweave::MyUtils
+
+fun rightPad(str,n) = MyUtils::rightPad(str,n)
+
+---
+{
+  "a": rightPad("e", 0),
+  "b": rightPad("e", 3),
+  "c": rightPad("e", 2)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="06e02077-b04b-47e9-b566-19114cf14ed2" />
+	</flow>
+</mule>

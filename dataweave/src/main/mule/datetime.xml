@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="datetimeFlow" doc:id="39505811-42a5-4dff-ba98-7ed539b09d3d" >
+		<scheduler doc:name="Scheduler" doc:id="25d3dec7-e89c-4d19-9b3c-59c4ab2b97ce" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="date String" doc:id="9303dce6-9e84-43ab-8681-cf01a92cb0be">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+"07082019113000000"
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="JSON payload" doc:id="bd9eb9be-f4a4-43eb-ba5e-fd2a8d309618" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+
+var a = payload 
+fun dateForm(a) = 
+if(sizeOf(a)>=16) a[0 to 1] ++ "-" ++ a[2 to 3] ++ "-" ++ a[4 to 7] ++ "T" ++ a[8 to 9] ++ ":" ++ a[10 to 11] ++ ":" ++ a[12 to 13] ++ "." ++ a[14 to 15] 
+else if(sizeOf(a)==14) a[0 to 1] ++ "-" ++ a[2 to 3] ++ "-" ++ a[4 to 7] ++ "T" ++ a[8 to 9] ++ ":" ++ a[10 to 11] ++ ":" ++ a[12 to 13] 
+else a
+---
+{
+	date: dateForm(a)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="payload" doc:id="b23b56dd-7634-471d-8f68-632320b38c01" message="#[payload]"/>
+	</flow>
+</mule>

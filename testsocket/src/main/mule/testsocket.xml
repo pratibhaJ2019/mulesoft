@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
-http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="3a515f0f-4f1e-4887-9143-226aa97ebf8c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
 	<flow name="testsocketFlow" doc:id="a7cc8e36-6f92-4aa2-af7c-85d76c931f10" >
-		<scheduler doc:name="Scheduler" doc:id="96192245-3943-48c0-b1a7-0408ea72067d" >
-			<scheduling-strategy >
-				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
-			</scheduling-strategy>
-		</scheduler>
+		<http:listener doc:name="Listener" doc:id="26eb2904-cc1d-4c09-8c70-e69702139f8a" config-ref="HTTP_Listener_config" path="/testsocket"/>
+		<set-variable value='#[((attributes.localAddress default "") splitBy ":")[0]]' doc:name="clientAddress" doc:id="4b5abf1b-6517-4e0c-bf0d-4590fa78c110" variableName="clientAddress"/>
 		<scripting:execute doc:id="ac52e899-bd27-40e4-9556-f37ec8735588" engine="jython">
 			<scripting:code >import socket
 
@@ -21,7 +23,7 @@ def netcat(hostname, port, content):
     s.sendall(content)
     s.shutdown(socket.SHUT_WR)
     while 1:
-        data = s.recv(1024)
+        data = s.recv(2048)
         if data == &quot;&quot;:
             break
         res = repr(data)
@@ -31,9 +33,11 @@ def netcat(hostname, port, content):
     print &quot;Connection closed.&quot;
     s.close()
 	
-result = netcat(&quot;srvjpsysdatas.mulesoft.local&quot;, 5861, &quot;10.242.0.12    ECO0000002ST200000010005         LOCK                                               AMENDMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                           &quot;)</scripting:code>
+result = netcat(host,port,content)</scripting:code>
 			<scripting:parameters ><![CDATA[#[{
-	initialValue: ""
+	host: "0.0.0.0", //"192.168.245.59", //"as400jpn.mulesoft.local",
+	port: 21,
+	content: "10.242.0.12    ECO0000002ST200000010005         LOCK                                               AMENDMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
 }]]]></scripting:parameters>
 		</scripting:execute>
 		<logger level="INFO" doc:name="payload" doc:id="e16a4da4-9aa4-4a88-9ab1-386c29fc80e6" message="#[payload]"/>

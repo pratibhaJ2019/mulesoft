@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<flow name="object-storeFlow" doc:id="ab53cb60-dde1-4d3a-bd85-28409398e730" >
+		<scheduler doc:name="Scheduler" doc:id="9889f940-ad0e-4499-90b1-ed9523ad17f1" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<os:retrieve doc:id="c7c1a7fa-72ee-4878-98d9-3a16c19326ab" key="key" target="key">
+			<os:default-value ><![CDATA[#[1]]]></os:default-value>
+		</os:retrieve>
+		<os:store doc:name="Store" doc:id="409f3934-cc6a-4bd4-a329-421c793d937f" key="key">
+			<os:value ><![CDATA[#[(vars.key default 0) as Number + 1]]]></os:value>
+		</os:store>
+		<logger level="INFO" doc:name="Logger" doc:id="9d8f1149-cc34-4fd0-9280-d077ed4935ff" />
+	</flow>
+</mule>
