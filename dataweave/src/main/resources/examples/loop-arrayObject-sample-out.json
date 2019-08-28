@@ -1,0 +1,12 @@
+[
+	{
+		"message": "ECMA 262 regex \"^(CANCELLATION|AMENDMENT)$\" does not match input string \"CANCELLATIO\"",
+		"regex": "^(CANCELLATION|AMENDMENT)$",
+		"string": "CANCELLATIO"
+	},
+	{
+		"message": "ECMA 262 regex \"^(LOCK|UNLOCK)$\" does not match input string \"UNLOC\"",
+		"regex": "^(LOCK|UNLOCK)$",
+		"string": "UNLOC"
+	}
+]

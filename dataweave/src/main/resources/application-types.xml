@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="loop-arrayObject" format="json">
+      <types:shape format="weave" example="examples/loop-arrayObject-sample-1.json"><![CDATA[%dw 2.0
+
+type loop_arrayObject = Array<{|  level: String,   schema: {|    loadingURI: String,     pointer: String  |},   instance: {| pointer: String |},   domain: String,   keyword: String,   message: String,   regex: String,   string: String|}> {"example": "[{\"level\":\"error\",\"schema\":{\"loadingURI\":\"file:\/opt\/mule\/mule-4.1.5\/apps\/batch-orders-bzhang\/schemas\/ORM_027_input_schema.json#\",\"pointer\":\"\/properties\/REQUEST_TYPE\"},\"instance\":{\"pointer\":\"\/REQUEST_TYPE\"},\"domain\":\"validation\",\"keyword\":\"pattern\",\"message\":\"ECMA 262 regex \\\"^(CANCELLATION|AMENDMENT)$\\\" does not match input string \\\"CANCELLATIO\\\"\",\"regex\":\"^(CANCELLATION|AMENDMENT)$\",\"string\":\"CANCELLATIO\"},{\"level\":\"error\",\"schema\":{\"loadingURI\":\"file:\/opt\/mule\/mule-4.1.5\/apps\/batch-orders-bzhang\/schemas\/ORM_027_input_schema.json#\",\"pointer\":\"\/properties\/SERVICE_TYPE\"},\"instance\":{\"pointer\":\"\/SERVICE_TYPE\"},\"domain\":\"validation\",\"keyword\":\"pattern\",\"message\":\"ECMA 262 regex \\\"^(LOCK|UNLOCK)$\\\" does not match input string \\\"UNLOC\\\"\",\"regex\":\"^(LOCK|UNLOCK)$\",\"string\":\"UNLOC\"}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="loop-arrayObject-out" format="json">
+      <types:shape format="weave" example="examples/loop-arrayObject-sample-out.json"><![CDATA[%dw 2.0
+
+type loop_arrayObject_out = Array<{|  message: String,   regex: String,   string: String|}> {"example": "[{\"message\":\"ECMA 262 regex \\\"^(CANCELLATION|AMENDMENT)$\\\" does not match input string \\\"CANCELLATIO\\\"\",\"regex\":\"^(CANCELLATION|AMENDMENT)$\",\"string\":\"CANCELLATIO\"},{\"message\":\"ECMA 262 regex \\\"^(LOCK|UNLOCK)$\\\" does not match input string \\\"UNLOC\\\"\",\"regex\":\"^(LOCK|UNLOCK)$\",\"string\":\"UNLOC\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#beef6fba-4976-4504-99a8-7d0fdded6fd3">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="loop-arrayObject"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="loop-arrayObject-out"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

@@ -1,0 +1,32 @@
+[
+	{
+		"level": "error",
+		"schema": {
+			"loadingURI": "file:/opt/mule/mule-4.1.5/apps/batch-orders-bzhang/schemas/ORM_027_input_schema.json#",
+			"pointer": "/properties/REQUEST_TYPE"
+		},
+		"instance": {
+			"pointer": "/REQUEST_TYPE"
+		},
+		"domain": "validation",
+		"keyword": "pattern",
+		"message": "ECMA 262 regex \"^(CANCELLATION|AMENDMENT)$\" does not match input string \"CANCELLATIO\"",
+		"regex": "^(CANCELLATION|AMENDMENT)$",
+		"string": "CANCELLATIO"
+	},
+	{
+		"level": "error",
+		"schema": {
+			"loadingURI": "file:/opt/mule/mule-4.1.5/apps/batch-orders-bzhang/schemas/ORM_027_input_schema.json#",
+			"pointer": "/properties/SERVICE_TYPE"
+		},
+		"instance": {
+			"pointer": "/SERVICE_TYPE"
+		},
+		"domain": "validation",
+		"keyword": "pattern",
+		"message": "ECMA 262 regex \"^(LOCK|UNLOCK)$\" does not match input string \"UNLOC\"",
+		"regex": "^(LOCK|UNLOCK)$",
+		"string": "UNLOC"
+	}
+]
