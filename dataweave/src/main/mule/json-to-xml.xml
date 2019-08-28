@@ -4,27 +4,13 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<flow name="language-guide" doc:id="c242f70f-1e24-428e-aac6-aad7e0f06c8d" >
-		<ee:transform doc:name="Transform Message" doc:id="f1421fce-0145-4d9e-82d5-8be788f2f9db" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-{
-	title: payload.title,
-	author: payload.author,
-	year: payload.year
-}]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-	</flow>
-	<flow name="dataweave-language-guideFlow" doc:id="d38bbe08-edfb-4e8f-a207-50fa549f93f3" >
+	<flow name="Json_to_XML" doc:id="d38bbe08-edfb-4e8f-a207-50fa549f93f3" >
 		<set-payload value='#[output application/json --- {
   "title": "Java 8 in Action",
   "author": "Mario Fusco",
   "year": 2014
-}]' doc:name="Set Payload" doc:id="bfb20dec-fb4e-4ca3-b048-cc89ddb92ec3" />
-		<ee:transform doc:name="Transform Message" doc:id="ec285aba-cd17-42f9-a344-4526a8963116" >
+}]' doc:name="JSON payload" doc:id="bfb20dec-fb4e-4ca3-b048-cc89ddb92ec3" />
+		<ee:transform doc:name="XML payload" doc:id="ec285aba-cd17-42f9-a344-4526a8963116" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/xml
