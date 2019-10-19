@@ -1,0 +1,10 @@
+clients: {
+  client: {
+    id: 1,
+     name: "Mariano"
+   },
+   client: {
+     id: 2,
+     name: "Shoki"
+  }
+}

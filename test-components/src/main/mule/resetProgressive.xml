@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+	<flow name="ORM_027" doc:id="2eb4b949-c54b-4f62-91b9-2c75ab29035a">
+		<scheduler doc:name="Reset_Progressive_Number" doc:id="9b50775f-bb14-4d1e-81bb-656147113053">
+			<scheduling-strategy>
+				<fixed-frequency frequency="1000000000" timeUnit="DAYS"
+					startDelay="1000000000" />
+			</scheduling-strategy>
+		</scheduler>
+		<os:retrieve doc:name="storedProgressive"
+			doc:id="38959bac-a69b-40b3-b7b7-ad1cdc39e208" key="storedProgressive"
+			target="storedProgressive" objectStore="ORM_027_Object_store">
+			<os:default-value><![CDATA[#[0]]]></os:default-value>
+		</os:retrieve>
+		<logger level="INFO" doc:name="Resetting Progressive"
+			doc:id="bbaf892b-b391-4167-9b69-59e180cc2e27"
+			message='#[%dw 2.0
+output application/json
+---
+"[ORM_027] Resetting progressive number, the actual progressive number is: " ++ (vars.storedProgressive default "") ++ " " ++ correlationId]' />
+		<os:store doc:name="storedProgressive" doc:id="a201ab2d-80d6-42de-85b6-a49ae6a95624"
+			key="storedProgressive" objectStore="ORM_027_Object_store">
+			<os:value><![CDATA[#["${orm_027.socket_input.initial_progressive}" as Number]]]></os:value>
+		</os:store>
+		<logger level="INFO" doc:name="Progressive Restored"
+			doc:id="402d4249-73c9-4f57-8c3d-e00e7cf2c664"
+			message='#[%dw 2.0
+output application/json
+---
+"[ORM_027] The progressive number is reset to: " ++ (vars.storedProgressive default "") ++ "; " ++ correlationId]' />
+		<error-handler>
+			<on-error-propagate enableNotifications="true"
+				logException="true" doc:name="On Error Propagate" doc:id="5d2db104-17f6-493f-9e92-41e2f879fe1d">
+				<ee:transform doc:name="Generical Error"
+					doc:id="c7607196-797d-4a10-8731-a7dcf64f3036">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "status": "Error",
+  "message": "[error] " ++ (error.description default "error"),
+  "errorType": (error.errorType.identifier default ""),
+  "interfaceId": "ORM_027",
+  "correlationId" : correlationId
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+<os:object-store name="ORM_027_Object_store" doc:name="Object store" doc:id="1dc68630-e0da-4578-8f64-f306d0e09a9c" />
+</mule>

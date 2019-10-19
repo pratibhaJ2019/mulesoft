@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="filter-array-objectsFlow" doc:id="a6c845c1-67fb-4418-aa01-66e6123839f2" >
+		<scheduler doc:name="Scheduler" doc:id="8149d5ad-9e7f-4cfe-9d0a-080bc1e580ee" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="4d9005d6-8cd9-4e42-a3aa-9a39b894ba83" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+[
+	{
+		"VENDOR_CODE" : "C20914036605",
+		"name" : "MAYA GIUBBOTTO",
+		"PART" : "68950",
+		"COLOR" : null,
+		"size" : null
+	},
+	{
+		"VENDOR_CODE" : "C20939474800",
+		"name" : "MAGLIONE TRICOT ALLA COREANA",
+		"PART" : "98125",
+		"COLOR" : "513",
+		"size" : "XS"
+	},
+	{
+		"VENDOR_CODE" : "C20934696300",
+		"name" : "PETREA GIUBBOTTO",
+		"PART" : "54543",
+		"COLOR" : "999",
+		"size" : "0"
+	},
+	{
+		"VENDOR_CODE" : "C20934981705",
+		"name" : "MOKA GIUBBOTTO",
+		"PART" : "68950",
+		"COLOR" : null,
+		"size" : null
+	},
+	{
+		"VENDOR_CODE" : "C20939474800",
+		"name" : "MAGLIONE TRICOT ALLA COREANA",
+		"PART" : "98125",
+		"COLOR" : "999",
+		"size" : "M"
+	},
+	{
+		"VENDOR_CODE" : "C20934830405",
+		"name" : "GHANY GILET",
+		"PART" : "68950",
+		"COLOR" : "742",
+		"size" : "5"
+	},
+	{
+		"VENDOR_CODE" : "C20939453400",
+		"name" : "MAGLIONE TRICOT CARDIGAN",
+		"PART" : "98124",
+		"COLOR" : "034",
+		"size" : "M"
+	}
+] filter (items, index) ->(items.size !=null)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="735157f7-a178-4cba-9d8c-d88b727e9d62" message="#[payload]"/>
+	</flow>
+</mule>

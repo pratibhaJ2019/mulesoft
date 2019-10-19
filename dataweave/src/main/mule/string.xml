@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="stringFlow" doc:id="0a11552d-3c57-4eab-bf32-6d062a8dd645" >
+		<scheduler doc:name="Scheduler" doc:id="9260083f-0a83-4d4d-8d75-40640ee0c02e" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Logger" doc:id="016e1329-bdca-4ada-9ee7-c2e0e7e73291" />
+		<set-variable value='#["ciao"]' doc:name="tmp" doc:id="111c610d-2930-4a72-8613-568718abbbb0" variableName="tmp"/>
+		<ee:transform doc:name="Transform Message" doc:id="b99b2252-f790-4549-b009-ef21bfec54d5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+"INSERT INTO XCH_FEEDBACK_RETURNS_IN (COMPANY,
+RETURN_NO,
+                RETURN_DATE          ,
+                ORDER_NO             ,
+                ORDER_LINE           ,
+                ORDER_SUB_LINE       ,
+                NOTES                ,
+                RETURN_LABEL         ,
+                TRACKING_NUMBER      ,
+                CUSTOMER_ID          ,
+                CUSTOMER_NAME        ,
+                CUSTOMER_EMAIL       ,
+                CUSTOMER_IBAN        ,
+                RETURN_PRICE         , 
+                REQUEST_CREDIT_NOTE  , 
+                CREDIT_NOTE_LINK     , 
+                REFUND_RESULT        , 
+                REFUND_AMOUNT        , 
+                REFUND_CURRENCY      , 
+                PRODUCT_ID           , 
+                MISMATCH_PRODUCT_ID  , 
+                EAN                  , 
+                STYLE                , 
+                FABRIC               , 
+                COLOR                ,
+                SIZE_POSITION        ,
+                SIZE_CODE            , 
+                QUANTITY             , 
+                REASON_ID            , 
+                REASON_CODE          , 
+                RETURN_STATUS        , 
+                RETURN_STATUS_DATE   , 
+                DOCUMENT_NO          , 
+                DOCUMENT_DATE        , 
+                QC_EVALUATION        , 
+                QC_DEFECT_ID         , 
+                QC_DEFECT_NAME       , 
+                QC_DEFECT_LEVEL      , 
+                QC_DEFECT_CAUSE_ID   , 
+                QC_DEFECT_CAUSE_NAME , 
+                QC_NOTE              , 
+                QC_QUANTITY          , 
+                QC_DATE              , 
+                LOGICAL_DELETE       , 
+                CREATION_USER        , 
+                CREATION_DATE        , 
+                LAST_UPDATE_USER     , 
+                LAST_UPDATE_DATE     , 
+                LAST_UPDATE_PROCEDURE, 
+                ELABORATION_STATUS   , 
+                ELABORATION_MESSAGE  , 
+                ELABORATION_SESSION  , 
+                RETURN_FLOW         , 
+                SHIP_TO_NAME1       , 
+                SHIP_TO_NAME2       , 
+                SHIP_TO_ADDRESS1    , 
+                SHIP_TO_ADDRESS2    , 
+                SHIP_TO_CITY1       , 
+                SHIP_TO_CITY2       , 
+                SHIP_TO_STATE       , 
+                SHIP_TO_COUNTRY     , 
+                SHIP_TO_ZIP_CODE    , 
+                SHIP_TO_PHONE_NUMBER, 
+                WAREHOUSE_NOTE, 
+                serial_number
+        )
+        VALUES
+        (
+                '64'             ,
+                'RETURN_NO'           ,
+                SYSDATE               ,
+                'ORDER_NO'            ,
+                2                     ,
+                1                     ,
+                'NOTES'               ,
+                'RETURN_LABEL'        ,
+                'TRACKING_NUMBER'     , 
+                'CUSTOMER_ID'         , 
+                'CUSTOMER_NAME'       , 
+                'CUSTOMER_EMAIL'      , 
+                'CUSTOMER_IBAN'       , 
+                0                     , 
+                'T' ,
+                'CREDIT_NOTE_LINK'    , 
+                'REFUND_RESULT'       , 
+                0                     , 
+                'RMB'     ,
+                'PRODUCT_ID'          ,
+                'MISMATCH_PRODUCT_ID' ,
+                'EAN'                 ,
+                'STYLE'               ,
+                'FABRIC'              ,
+                'COLOR'               ,
+                2                     ,
+                'SCODE'           ,
+                1                     ,
+                'REASON_ID'           ,
+                'REASON_CODE'         ,
+                'RETURN_STATUS'       ,
+                SYSDATE               ,
+                'DOCUMENT_NO'         ,
+                SYSDATE               ,
+                'QC_EVALUATION'       ,
+                'QC_DEFECT_ID'        ,
+                'QC_DEFECT_NAME'      ,
+                'QC_DEFECT_LEVEL'     ,
+                'QC_DEFECT_CAUSE_ID'  ,
+                'QC_DEFECT_CAUSE_NAME',
+                'QC_NOTE'             ,
+                0                     ,
+                SYSDATE               ,
+                0                     ,
+                'Mulesoft'            ,
+                SYSDATE               ,
+                'Mulesoft'            ,
+                SYSDATE               ,
+                'ORM_020'             ,
+                'N'                   ,
+                ' '                   ,
+                201901645992          ,
+                'RETURN_FLOW'         ,
+                'SHIP_TO_NAME1'       ,
+                'SHIP_TO_NAME2'       ,
+                'SHIP_TO_ADDRESS1'    ,
+                'SHIP_TO_ADDRESS2'    ,
+                'SHIP_TO_CITY1'       ,
+                'SHIP_TO_CITY2'       ,
+                'SHIP_TO_STATE'       ,
+                'SHIP_TO_COUNTRY'     ,
+                '99999'    ,
+                'SHIP_TO_PHONE_NUMBER',
+                'WAREHOUSE_NOTE',        
+                'serial_number'
+        )" as String replace /\n/ with ""]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3c30314c-b7be-42bb-bbee-4b9be608eedb" />
+	</flow>
+</mule>

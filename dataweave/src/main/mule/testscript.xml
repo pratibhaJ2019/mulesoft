@@ -4,16 +4,7 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<flow name="Concatenate_Two_Strings_Into_ASingle_String" doc:id="7dd6b753-be73-4ea2-a0f1-c5bb1839429c" initialState="stopped">
-		<ee:transform doc:name="Transform Message" doc:id="5222ce93-7808-40bf-9caf-d77d55cfb290" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-{ myString: ("hello" ++ "World") }]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-	</flow>
+
 	<flow name="Transform_JSON_Input_To_XML_Output" doc:id="86eb117a-ec9f-491f-b665-cc91aec1025a" >
 		<ee:transform doc:name="Transform Message" doc:id="48db41b7-cc8f-4772-9ea2-ab9e7840abec" >
 			<ee:message >

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="multipartFlow" doc:id="21fee9f4-29c3-4c54-95be-702c78dd70c5" >
+		<scheduler doc:name="Scheduler" doc:id="6051d472-9cc7-4a7e-8f38-4759db2a44b9" >
+			<scheduling-strategy >
+				<fixed-frequency startDelay="1000" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="57f181d6-b9b0-42f5-8d7c-7f730c3f7f9b" >
+
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+import dw::module::Multipart
+output multipart/form-data
+var myClients = "myClients.json"
+var myArgs = { name: "myFile", path: "myClients.json", mime: "application/json", fileName: "partMyClients.json"}
+---
+Multipart::form([
+  Multipart::file(myArgs)
+])]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="7ebf0437-776a-4a28-abf9-aae90ccb0e65" />
+	</flow>
+</mule>

@@ -5,7 +5,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="currentTime" doc:id="16d54d7a-d764-4c83-abd0-be090f28e421" >
-		<set-payload value="#[now()]" variablename="timestamp" doc:name="now()" doc:id="9fabc0c9-6f9c-4f0e-ab54-b20a67329aff" />
 		<ee:transform doc:name="JSON payload" doc:id="7bd527af-a8a7-4bf0-997d-2c84b2cc12d7">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
