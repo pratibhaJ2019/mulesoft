@@ -3,4 +3,4 @@
 *.log
 *.fdb_latexmk
 *.gz
-*.pdf
+*.out
