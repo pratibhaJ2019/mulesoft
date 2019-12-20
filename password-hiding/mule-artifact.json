@@ -1,10 +1,8 @@
 {
 	"configs": [
-		"spring-basic-auth.xml",
 		"password-hiding.xml",
 		"https.xml",
-		"global.xml",
-		"beans.xml"
+		"global.xml"
 	],
 	"secureProperties": [
 		"https.port",
