@@ -25,7 +25,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	<http:listener-config name="HTTP_Listener_config"
 		doc:name="HTTP Listener config" doc:id="699c0d86-6946-48d9-9c94-6b35daaf0b21">
 		<http:listener-connection host="0.0.0.0"
-			port="9090" />
+			port="${http.port}" />
 	</http:listener-config>
 
 	<flow name="spring-exampleFlow" doc:id="209d6430-ce78-45e7-b152-96b2082b4926">
@@ -34,7 +34,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 		<http:basic-security-filter realm="mule" />
 		<spring:authorization-filter
 			requiredAuthorities="ROLE_ADMIN" doc:id="993ad0dd-22a2-49ee-8d4c-b6574505d92d" />
-		<set-payload value='#["User logged in successfully"]' doc:name="Success" doc:id="95f0077d-1bfc-460d-8f5c-e6136de44bc2" />
+		<set-payload value='#["User logged in successfully: HTTP port: ${http.port}, username: ${username}, password: ${password}, birthdate: ${birthdate}"]' doc:name="Success" doc:id="95f0077d-1bfc-460d-8f5c-e6136de44bc2" />
 	
 </flow>
 </mule>

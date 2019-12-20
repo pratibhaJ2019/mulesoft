@@ -17,7 +17,9 @@
 	"classLoaderModelLoaderDescriptor": {
 		"id": "mule",
 		"attributes": {
-			"exportedResources": []
+			"exportedResources": [
+			"beans.xml"
+			]
 		}
 	},
 	"bundleDescriptorLoader": {

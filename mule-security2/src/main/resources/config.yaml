@@ -1,0 +1,9 @@
+http:
+  port: "8081"
+https:
+  port: "8082"
+keystore:
+  password: "password"  
+username: "testuser"
+password: "testpass123"
+birthdate: "01/01/2015"

@@ -1,3 +1,22 @@
 {
-	"minMuleVersion": "4.1.4"
+	"name": "mule-security2",
+	"minMuleVersion": "4.1.4",
+	"configs":[
+		"config.xml",
+		"spring-basic-auth.xml"
+	],
+	"secureProperties":[
+		"https.port",
+		"http.port",
+		"password",
+		"birthdate"
+	],
+	"classLoaderModelLoaderDescriptor": {
+		"id": "mule",
+		"attributes": {
+			"exportedResources": [
+				"beans.xml"
+			]
+		}
+	}
 }
