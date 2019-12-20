@@ -124,7 +124,7 @@
 
  2019 % Publication year
 
-  {\large MuleSoft Inc.} % Publisher
+  {\large } % Publisher
 
 \end{titlepage}
 
@@ -141,7 +141,7 @@
 
 \chapter{Introduction}
 
-\section{There are two architecture courses and certifications}
+\section{Integration architecture and Platform architecture}
 
 \begin{itemize}
 
@@ -161,7 +161,7 @@
 
 \end{itemize}
 
-\textbf{Prerequisites}\\
+\section{Prerequisites for Anypoint Platform architecture}
 
 \textbf{Experience with Anypoint Platform} and its constituent components
 
@@ -173,13 +173,69 @@
 \end{itemize}
 
 \begin{mdframed}[backgroundcolor=yellow]
-	The \texttit{target audience} of this course are architects, especially Enterprise Architects and Solution Architects, new to Anypoint Platform, API-led connectivity and the application network approach, but experienced in other
+	The \textit{target audience} of this course are architects, especially Enterprise Architects and Solution Architects, new to Anypoint Platform, API-led connectivity and the application network approach, but experienced in other
 \end{mdframed}
 
 
+\section{Goals}
 
+\begin{itemize}
+	\item \textbf{Direct} the emergece of an effective \textbf{application network} out of individual integration solutions following API-led connectivity, working \textbf{with all relevant stakeholders} on all levels of the organization
+	\item \textbf{Create} credible \textbf{high-level architecture models} for integration solutions on Anypoint Platform such that functional and non-functional requirements are likely to be met and the principles of \textbf{API-led connectivity} and application networks are followed 
+	\item Predominantly about \textbf{cloud-native architectures} using the MuleSoft-hosted Anypoint Platform, i.e. \textbf{CloudHub} 
+\end{itemize}
 
+\section{Outline}
 
+\begin{enumerate}
+	\item Putting the Course in Context
+	\item Introducing MuleSoft, the Application Network Vision and Anypoint Platform
+	\item Establishing Organizational and Platform Foundations
+	\item Identifying, Reusing and Publishing APIs
+	\item Enforcing NFRs on the Level of API Invocations Using Anypoint API Manager
+	\item Designing Effective APIs
+	\item Architecture design and Deploying Effective API Implementations
+	\item Augmenting API-Led Connectivity with Elements From Event-Driven Architecture
+	\item Transiting Into Production
+	\item Monitoring and Analyzing the Behavior of the application Network  
+\end{enumerate}
 
+\begin{figure}[h]
+	
+	\begin{minipage}{1\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{FluffAndStuff}
+		%\caption{No eavesdropping no tampering}\label{}
+	\end{minipage}
+	
+\end{figure}
+
+\section{How the course will work}
+
+\begin{itemize}
+	\item Central topic: How to \textbf{architect and design application networks} using API-led connectivity and Anypoint Platform. (Partly \textbf{Solution Architecture}, partly \textbf{Enterprise Architecture})
+	\item No architecturally \textbf{insignificant} design and implementation discussion
+	(Fairly detailed discussion on strategies for invoking APIs in a fault-tolerant way)
+	\item RAML features are touched-on because they are important for the functioning of an application network
+\end{itemize}
+
+\begin{mdframed}[backgroundcolor=yellow]
+	
+	\begin{itemize}
+		\item Discussions on topics like scale of Enterprise Architecture, touching lightly on Business Architecture, and heavily on Application Architecture and Technology Architecture.
+		\item Motivations and Enterprise Architecture Building from strategically important integration solutions and therefore elaborates on parts of their high-level Solution Architecture. 
+		\item It stays away from architecturally insignificant design and implementation discussions: 
+		\begin{itemize}
+			\item As a rule, these are all topics whose repercussions are confined to individual application components and are therefore not apparent from outside these application components. 
+			\item When a decision affects the large-scale properties of the application network, however, it becomes architecturally significant. This is the reason why the course contains a fairly detailed discussion on strategies for invoking APIs in a fault-tolerant way
+			\item The topic of API specifications and the features offered by RAML in this space are touched upon in several places, because they are important for the functioning of an application network.
+		\end{itemize}	
+	\end{itemize}
+	
+	This course is primarily driven by a single \textit{case study}, \textit{Acme Insurance}, and two imminent strategically important change initiatives that need to be addressed by Acme Insurance. These change initiative provide the background and motivation for most discussions in this course.
+	
+	As various aspects of the case study are addressed, the discussion naturally elaborates on the central topic of the course, i.e., \textit{how to architect and design application networks using API-led connectivity and Anypoint Platform}.
+	
+\end{mdframed}
 
 \end{document}
